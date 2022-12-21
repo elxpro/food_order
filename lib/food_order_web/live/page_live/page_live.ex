@@ -1,25 +1,15 @@
 defmodule FoodOrderWeb.PageLive do
   use FoodOrderWeb, :live_view
+  alias FoodOrderWeb.Client, as: CL
+  alias FoodOrderWeb.PageLive.Client
 
   def mount(_, _, socket) do
-    {:ok, assign(socket, name: "hi")}
+    clients = CL.all()
+    {:ok, assign(socket, clients: clients)}
   end
 
-  def render(assigns) do
-    ~H"""
-        <%= self() |> :erlang.pid_to_list() %>
-        hi <%= @name %>
-    """
+  def handle_info({:change_name, id, name}, socket) do
+    send_update(Client, id: id, name: name)
+    {:noreply, socket}
   end
-
-  def handle_info({:change_name, name}, socket) do
-    {:noreply, assign(socket, name: name)}
-  end
-
-  # mount
-  # handle_params
-  # attach_hook - in the future
-  # handle_info
-  # handle_event
-  # components -
 end
