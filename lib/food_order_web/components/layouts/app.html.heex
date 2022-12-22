@@ -1,4 +1,4 @@
-<div class="mx-auto max-w-2xl">
+<div class="mx-auto max-w-7xl">
   <.flash kind={:info} title="Success!" flash={@flash} />
   <.flash kind={:error} title="Error!" flash={@flash} />
   <.flash
@@ -12,5 +12,32 @@
   >
     Attempting to reconnect <Heroicons.arrow_path class="ml-1 w-3 h-3 inline animate-spin" />
   </.flash>
+
+  <nav class="flex items-center justify-between py-4">
+    <div id="logo">logo</div>
+    <ul class="flex items-center">
+      <li class="ml-6">
+        Admin Products
+      </li>
+      <li class="ml-6">
+        Admin Orders
+      </li>
+      <li class="ml-6">
+        My Orders
+      </li>
+
+      <li class="ml-6">
+        Settings
+      </li>
+      <li class="ml-6">
+        Log out
+      </li>
+
+      <li class="ml-6 p-4 bg-yellow-500 rounded-full text-neutral-100 flex group hover:text-yellow-500 hover:bg-yellow-100 transition">
+        <span class="text-xs">0</span>
+        <Heroicons.shopping_cart solid class="h-5 w-5 stroke-current" />
+      </li>
+    </ul>
+  </nav>
   <%= @inner_content %>
 </div>
