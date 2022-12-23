@@ -1,0 +1,56 @@
+<div class="container mx-auto lg:w-1/2">
+  <div class="flex border-b items-center border-neutral-300 pb-4">
+    <Heroicons.shopping_bag solid class="w-10 h-10 text-orange-500" />
+    <h1 class="font-bold ml-4 text-2xl">Order Detail</h1>
+  </div>
+
+  <div>
+    <div :for={_ <- 1..4} class="flex items-center my-8 shadow-lg p-2 hover:bg-neutral-100">
+      <img src={~p"/images/product_1.jpeg"} alt="" class="h-16 w-16 rounded-full" />
+
+      <div class="flex-1 ml-4">
+        <h1>Pizza</h1>
+        <span>Small</span>
+      </div>
+
+      <div class="flex-1">
+        <div class="flex items-center">
+          <button class="p-1 m-2 rounded-full text-white font-bold bg-orange-500">-</button>
+          <span>10 Item(s)</span>
+          <button class="p-1 m-2 rounded-full text-white font-bold bg-orange-500">+</button>
+        </div>
+      </div>
+
+      <div class="flex flex-1 items-center">
+        <span class="font-bold text-lg">$100</span>
+        <button class="ml-2 w-6 h-6 rounded-full text-white bg-orange-500 font-bold">
+          &times
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="text-right py-4">
+    <div>
+      <span class="text-lg">Total Amount:</span>
+      <span class="text-2xl font-bold ml-2">$1000</span>
+    </div>
+
+    <form action="" class="mt-12">
+      <input
+        type="text"
+        class="border border-neutral-400 p-2 w-1/2 mb-4"
+        placeholder="Phone Number"
+      />
+      <input type="text" class="border border-neutral-400 p-2 w-1/2 mb-4" placeholder="Address" />
+
+      <div>
+        <button class="bg-orange-500 text-white px-6 py-2 rounded-full font-bold mt-6">
+          Order Now
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
