@@ -1,3 +1,9 @@
 <.header>
   List Products
 </.header>
+
+<.table id="products" rows={@products}>
+  <:col :let={product} label="name"><%= product.name %></:col>
+  <:col :let={product} label="price"><%= product.price %></:col>
+  <:col :let={product} label="size"><%= product.size %></:col>
+</.table>
