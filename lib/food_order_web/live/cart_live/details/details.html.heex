@@ -5,8 +5,17 @@
   </div>
 
   <div>
-    <div data-role="item" :for={_ <- 1..4} class="flex items-center my-8 shadow-lg p-2 hover:bg-neutral-100">
-      <img data-role="item-image" src={~p"/images/product_1.jpeg"} alt="" class="h-16 w-16 rounded-full" />
+    <div
+      :for={_ <- 1..4}
+      data-role="item"
+      class="flex items-center my-8 shadow-lg p-2 hover:bg-neutral-100"
+    >
+      <img
+        data-role="item-image"
+        src={~p"/images/product_1.jpeg"}
+        alt=""
+        class="h-16 w-16 rounded-full"
+      />
 
       <div class="flex-1 ml-4">
         <h1>Pizza</h1>
@@ -15,9 +24,13 @@
 
       <div class="flex-1" data-role="quantity">
         <div class="flex items-center">
-          <button data-role="dec" class="p-1 m-2 rounded-full text-white font-bold bg-orange-500">-</button>
+          <button data-role="dec" class="p-1 m-2 rounded-full text-white font-bold bg-orange-500">
+            -
+          </button>
           <span>10 Item(s)</span>
-          <button data-role="add" class="p-1 m-2 rounded-full text-white font-bold bg-orange-500">+</button>
+          <button data-role="add" class="p-1 m-2 rounded-full text-white font-bold bg-orange-500">
+            +
+          </button>
         </div>
       </div>
 
