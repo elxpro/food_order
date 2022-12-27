@@ -15,6 +15,7 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
         for={@changeset}
         id="product-form"
         phx-change="validate"
+        phx-submit="save"
         phx-target={@myself}
       >
         <.input field={{f, :name}} label="name" />
@@ -36,5 +37,20 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
       |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, :changeset, changeset)}
+  end
+
+  def handle_event("save", %{"product" => product_params}, socket) do
+    case Products.create_product(product_params) do
+      {:ok, _} ->
+        socket =
+          socket
+          |> put_flash(:info, "Product created successfully")
+          |> push_navigate(to: socket.assigns.navigate)
+
+        {:noreply, socket}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, :changeset, changeset)}
+    end
   end
 end
