@@ -17,6 +17,16 @@ defmodule FoodOrderWeb.PageLiveTest do
       assert has_element?(view, product_id <> ">td>div>span", Money.to_string(product.price))
       assert has_element?(view, product_id <> ">td>div>span", Atom.to_string(product.size))
     end
+
+    test "add new product", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/admin/products")
+
+      assert view  |> element("header>div>a", "New Product") |> render_click()
+
+      assert_patch(view, ~p"/admin/products/new")
+
+      assert view |> has_element?("#new-product-modal")
+    end
   end
 
   def create_product(_) do

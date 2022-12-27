@@ -1,5 +1,8 @@
 <.header>
   List Products
+  <:actions>
+    <.link patch={~p"/admin/products/new"}>New Product</.link>
+  </:actions>
 </.header>
 
 <.table id="products" rows={@products}>
@@ -7,3 +10,8 @@
   <:col :let={product} label="price"><%= product.price %></:col>
   <:col :let={product} label="size"><%= product.size %></:col>
 </.table>
+
+<.modal :if={@live_action == :new} id="new-product-modal">
+  Are you sure?
+  <:confirm>OK</:confirm>
+</.modal>
