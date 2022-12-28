@@ -23,6 +23,7 @@ defmodule FoodOrderWeb.Router do
     scope "/admin", Admin do
       live "/products", ProductLive.Index, :index
       live "/products/new", ProductLive.Index, :new
+      live "/products/:id", ProductLive.Show, :show
     end
   end
 
