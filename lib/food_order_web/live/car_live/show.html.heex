@@ -1,0 +1,26 @@
+<.header>
+  Car <%= @car.id %>
+  <:subtitle>This is a car record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/cars/#{@car}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit car</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @car.name %></:item>
+</.list>
+
+<.back navigate={~p"/cars"}>Back to cars</.back>
+
+<.modal :if={@live_action == :edit} id="car-modal" show on_cancel={JS.patch(~p"/cars/#{@car}")}>
+  <.live_component
+    module={FoodOrderWeb.CarLive.FormComponent}
+    id={@car.id}
+    title={@page_title}
+    action={@live_action}
+    car={@car}
+    navigate={~p"/cars/#{@car}"}
+  />
+</.modal>

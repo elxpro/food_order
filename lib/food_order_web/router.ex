@@ -28,6 +28,13 @@ defmodule FoodOrderWeb.Router do
       live "/products/:id", ProductLive.Show, :show
       live "/products/:id/show/edit", ProductLive.Show, :edit
     end
+
+    live "/cars", CarLive.Index, :index
+    live "/cars/new", CarLive.Index, :new
+    live "/cars/:id/edit", CarLive.Index, :edit
+
+    live "/cars/:id", CarLive.Show, :show
+    live "/cars/:id/show/edit", CarLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

@@ -1,0 +1,39 @@
+<.header>
+  Listing Cars
+  <:actions>
+    <.link patch={~p"/cars/new"}>
+      <.button>New Car</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="cars" rows={@cars} row_click={&JS.navigate(~p"/cars/#{&1}")}>
+  <:col :let={car} label="Name"><%= car.name %></:col>
+  <:action :let={car}>
+    <div class="sr-only">
+      <.link navigate={~p"/cars/#{car}"}>Show</.link>
+    </div>
+    <.link patch={~p"/cars/#{car}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={car}>
+    <.link phx-click={JS.push("delete", value: %{id: car.id})} data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="car-modal"
+  show
+  on_cancel={JS.navigate(~p"/cars")}
+>
+  <.live_component
+    module={FoodOrderWeb.CarLive.FormComponent}
+    id={@car.id || :new}
+    title={@page_title}
+    action={@live_action}
+    car={@car}
+    navigate={~p"/cars"}
+  />
+</.modal>
