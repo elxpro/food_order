@@ -1,5 +1,9 @@
 <.header>
   Product <%= @product.id %>
+
+  <:actions>
+    <.link patch={~p"/admin/products/#{@product.id}/show/edit"}>Edit Product</.link>
+  </:actions>
 </.header>
 
 <.list>
@@ -13,3 +17,19 @@
 </.list>
 
 <.back navigate={~p"/admin/products"}>Back to products</.back>
+
+<.modal
+  :if={@live_action == :edit}
+  show
+  id="product-modal"
+  on_cancel={JS.navigate(~p"/admin/products/#{@product}")}
+>
+  <.live_component
+    module={Form}
+    id={@product.id}
+    title={@page_title}
+    product={@product}
+    action={@live_action}
+    navigate={~p"/admin/products/#{@product}"}
+  />
+</.modal>
