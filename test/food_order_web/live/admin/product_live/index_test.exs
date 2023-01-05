@@ -46,6 +46,20 @@ defmodule FoodOrderWeb.PageLiveTest do
       assert html =~ "Product created successfully"
       assert html =~ "Product 1 Name"
     end
+
+    test "delete product", %{conn: conn, product: product} do
+      {:ok, view, _html} = live(conn, ~p"/admin/products")
+
+      product_id = "#products-#{product.id}"
+
+      assert has_element?(view, product_id)
+
+      view
+      |> element(product_id <> ">td>div>span>div>a", "Delete")
+      |> render_click()
+
+      refute has_element?(view, product_id)
+    end
   end
 
   def create_product(_) do

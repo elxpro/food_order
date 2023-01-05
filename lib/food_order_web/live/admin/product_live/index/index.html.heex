@@ -15,6 +15,14 @@
       <.link navigate={~p"/admin/products/#{product}"}>Show</.link>
     </div>
   </:action>
+
+  <:action :let={product}>
+    <div>
+      <.link phx-click={JS.push("delete", value: %{id: product.id})} data-confirm="Are you sure?">
+        Delete
+      </.link>
+    </div>
+  </:action>
 </.table>
 
 <.modal

@@ -11,7 +11,6 @@ defmodule FoodOrderWeb.PageLive.ShowTest do
       assert has_element?(view, "div>dt", "Name")
       assert has_element?(view, "div>dd", product.name)
     end
-
   end
 
   def create_product(_) do
