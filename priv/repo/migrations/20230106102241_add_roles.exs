@@ -6,7 +6,7 @@ defmodule FoodOrder.Repo.Migrations.AddRoles do
     drop = "DROP TYPE roles"
     execute(query, drop)
 
-    alter table :users do
+    alter table(:users) do
       add :role, :roles, default: "USER", null: false
     end
   end
