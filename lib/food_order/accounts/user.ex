@@ -1,6 +1,7 @@
 defmodule FoodOrder.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+  @roles ~w/USER ADMIN/a
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "users" do
@@ -8,6 +9,7 @@ defmodule FoodOrder.Accounts.User do
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
+    field :roles, Ecto.Enum, values: @roles, default: :USER
 
     timestamps()
   end
