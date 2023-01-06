@@ -4,7 +4,7 @@ defmodule FoodOrderWeb.PageLive.ShowTest do
   import Phoenix.LiveViewTest
 
   describe "show" do
-    setup [:create_product]
+    setup [:create_product, :register_and_log_in_user]
 
     test "display product", %{conn: conn, product: product} do
       {:ok, view, _html} = live(conn, ~p"/admin/products/#{product}")
