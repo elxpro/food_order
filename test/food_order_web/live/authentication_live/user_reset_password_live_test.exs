@@ -93,7 +93,7 @@ defmodule FoodOrderWeb.UserResetPasswordLiveTest do
 
       {:ok, conn} =
         lv
-        |> element(~s|main a:fl-contains("Log in")|)
+        |> element(~s|div a:fl-contains("Log in")|)
         |> render_click()
         |> follow_redirect(conn, ~p"/users/log_in")
 
@@ -108,7 +108,7 @@ defmodule FoodOrderWeb.UserResetPasswordLiveTest do
 
       {:ok, conn} =
         lv
-        |> element(~s|main a:fl-contains("Register")|)
+        |> element(~s|div a:fl-contains("Register")|)
         |> render_click()
         |> follow_redirect(conn, ~p"/users/register")
 
