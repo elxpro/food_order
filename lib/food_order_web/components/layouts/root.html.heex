@@ -12,26 +12,9 @@
     </script>
   </head>
   <body>
-    <ul>
-      <%= if @current_user do %>
-        <li>
-          <%= @current_user.email %>
-        </li>
-        <li>
-          <.link href={~p"/users/settings"}>Settings</.link>
-        </li>
-        <li>
-          <.link href={~p"/users/log_out"} method="delete">Log out</.link>
-        </li>
-      <% else %>
-        <li>
-          <.link href={~p"/users/register"}>Register</.link>
-        </li>
-        <li>
-          <.link href={~p"/users/log_in"}>Log in</.link>
-        </li>
-      <% end %>
-    </ul>
-    <%= @inner_content %>
+    <div class="mx-auto max-w-7xl">
+      <FoodOrderWeb.HeaderComponent.menu current_user={@current_user} />
+      <%= @inner_content %>
+    </div>
   </body>
 </html>
