@@ -4,7 +4,7 @@ defmodule FoodOrderWeb.Admin.PageLive.IndexTest do
   import Phoenix.LiveViewTest
 
   describe "index" do
-    setup [:create_product]
+    setup [:create_product, :register_and_log_in_user]
 
     test "list products", %{conn: conn, product: product} do
       {:ok, view, _html} = live(conn, ~p"/admin/products")
@@ -80,9 +80,9 @@ defmodule FoodOrderWeb.Admin.PageLive.IndexTest do
       assert html =~ "pumpkin name updated"
     end
 
-
     test "updates product within modal", %{conn: conn, product: product} do
       {:ok, view, _html} = live(conn, ~p"/admin/products/#{product}")
+
       assert view |> element("a", "Edit") |> render_click() =~
                "Edit"
 
