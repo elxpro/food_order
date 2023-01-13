@@ -488,7 +488,9 @@ defmodule FoodOrder.AccountsTest do
     end
 
     test "updates the password", %{user: user} do
-      {:ok, updated_user} = Accounts.reset_user_password(user, %{password: "New@Val1Password123122"})
+      {:ok, updated_user} =
+        Accounts.reset_user_password(user, %{password: "New@Val1Password123122"})
+
       assert is_nil(updated_user.password)
       assert Accounts.get_user_by_email_and_password(user.email, "New@Val1Password123122")
     end

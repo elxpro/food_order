@@ -3,11 +3,11 @@ defmodule FoodOrderWeb.HeaderComponent do
 
   def menu(assigns) do
     ~H"""
-      <nav class="flex items-center justify-between py-4">
-        <a href="/" id="logo">
-          <img src={~p"/images/logo.png"} alt="" class="h-16 w-16" />
-        </a>
-        <ul class="flex items-center">
+    <nav class="flex items-center justify-between py-4">
+      <a href="/" id="logo">
+        <img src={~p"/images/logo.png"} alt="" class="h-16 w-16" />
+      </a>
+      <ul class="flex items-center">
         <%= if @current_user do %>
           <li class="ml-6">
             <.link href={~p"/admin/products"}>Admin Products</.link>
@@ -33,15 +33,15 @@ defmodule FoodOrderWeb.HeaderComponent do
             <.link href={~p"/users/log_in"}>Log in</.link>
           </li>
         <% end %>
-          <a
-            href={~p"/cart"}
-            class="ml-6 p-4 bg-orange-500 rounded-full text-neutral-100 flex group hover:text-orange-500 hover:bg-orange-100 transition"
-          >
-            <span class="text-xs">0</span>
-            <Heroicons.shopping_cart solid class="h-5 w-5 stroke-current" />
-          </a>
-        </ul>
-      </nav>
+        <a
+          href={~p"/cart"}
+          class="ml-6 p-4 bg-orange-500 rounded-full text-neutral-100 flex group hover:text-orange-500 hover:bg-orange-100 transition"
+        >
+          <span class="text-xs">0</span>
+          <Heroicons.shopping_cart solid class="h-5 w-5 stroke-current" />
+        </a>
+      </ul>
+    </nav>
     """
   end
 end
