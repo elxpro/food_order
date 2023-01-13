@@ -9,15 +9,18 @@ defmodule FoodOrderWeb.HeaderComponent do
       </a>
       <ul class="flex items-center">
         <%= if @current_user do %>
-          <li class="ml-6">
-            <.link href={~p"/admin/products"}>Admin Products</.link>
-          </li>
-          <li class="ml-6">
-            Admin Orders
-          </li>
-          <li class="ml-6">
-            My Orders
-          </li>
+          <%= if @current_user.role == :ADMIN do %>
+            <li class="ml-6">
+              <.link href={~p"/admin/products"}>Admin Products</.link>
+            </li>
+            <li class="ml-6">
+              Admin Orders
+            </li>
+          <% else %>
+            <li class="ml-6">
+              My Orders
+            </li>
+          <% end %>
           <li class="ml-6">
             <.link href={~p"/users/settings"}>Settings</.link>
           </li>
