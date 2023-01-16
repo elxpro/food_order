@@ -5,7 +5,7 @@ defmodule FoodOrder.AccountsFixtures do
   """
 
   def unique_user_email, do: "user#{System.unique_integer()}@example.com"
-  def valid_user_password, do: "hello world!"
+  def valid_user_password, do: "adm@elxpro.Com1"
 
   def valid_user_attributes(attrs \\ %{}) do
     Enum.into(attrs, %{
@@ -15,6 +15,15 @@ defmodule FoodOrder.AccountsFixtures do
   end
 
   def user_fixture(attrs \\ %{}) do
+    {:ok, user} =
+      attrs
+      |> valid_user_attributes()
+      |> FoodOrder.Accounts.register_user()
+
+    user
+  end
+
+  def admin_fixture(attrs \\ %{role: "ADMIN"}) do
     {:ok, user} =
       attrs
       |> valid_user_attributes()
