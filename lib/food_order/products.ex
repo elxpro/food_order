@@ -25,6 +25,9 @@ defmodule FoodOrder.Products do
       {:name, name}, query ->
         name = "%" <> name <> "%"
         where(query, [q], ilike(q.name, ^name))
+
+      {:sort, %{sort_by: sort_by, sort_order: sort_order}}, query ->
+        order_by(query, [q], [{^sort_order, ^sort_by}])
     end)
     |> Repo.all()
   end
