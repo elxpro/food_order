@@ -4,14 +4,18 @@ defmodule FoodOrderWeb.Admin.ProductLive.Index do
   alias FoodOrder.Products.Product
   alias FoodOrderWeb.Admin.ProductLive.Form
 
-  def mount(_, _, socket) do
-    products = Products.list_products()
-    {:ok, assign(socket, products: products)}
-  end
-
   def handle_params(params, _, socket) do
     live_action = socket.assigns.live_action
-    {:noreply, apply_action(socket, live_action, params)}
+    name = params["name"] || ""
+    products = Products.list_products(name: name)
+
+    socket =
+      socket
+      |> apply_action(live_action, params)
+      |> assign(name: name)
+      |> assign(products: products)
+
+    {:noreply, socket}
   end
 
   def handle_event("delete", %{"id" => id}, socket) do
@@ -20,6 +24,11 @@ defmodule FoodOrderWeb.Admin.ProductLive.Index do
     Products.delete_product(product)
     delete_product = fn products -> Enum.filter(products, &(&1.id != id)) end
     {:noreply, update(socket, :products, &delete_product.(&1, id))}
+  end
+
+  def handle_event("filter_by_name", %{"name" => name}, socket) do
+    products = Products.list_products(name: name)
+    {:noreply, assign(socket, products: products, name: name)}
   end
 
   defp apply_action(socket, :new, _params) do
@@ -33,5 +42,25 @@ defmodule FoodOrderWeb.Admin.ProductLive.Index do
 
   defp apply_action(socket, :index, _params) do
     socket |> assign(:page_title, "List Products")
+  end
+
+  def search_by_name(assigns) do
+    ~H"""
+    <form phx-submit="filter_by_name" class="mr-4">
+      <div class="relative">
+        <span class="absolute inset-y-0 pl-2 left-0 flex items-center">
+          <Heroicons.magnifying_glass solid class="h-6 w-6 stroke-current" />
+        </span>
+        <input
+          type="text"
+          autocomplete="off"
+          name="name"
+          value={@name}
+          placeholder="Search by name"
+          class="pl-10 pr-4 py-4 text-gray-900 text-sm leading-tight border-gray-400 placeholder-gray-600 rounded-md border"
+        />
+      </div>
+    </form>
+    """
   end
 end
