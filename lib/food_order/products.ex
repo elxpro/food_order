@@ -17,8 +17,16 @@ defmodule FoodOrder.Products do
       [%Product{}, ...]
 
   """
-  def list_products do
-    Repo.all(Product)
+  def list_products(params \\ []) do
+    query = from(p in Product)
+
+    params
+    |> Enum.reduce(query, fn
+      {:name, name}, query ->
+        name = "%" <> name <> "%"
+        where(query, [q], ilike(q.name, ^name))
+    end)
+    |> Repo.all()
   end
 
   @doc """

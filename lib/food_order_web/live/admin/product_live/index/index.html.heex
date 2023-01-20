@@ -1,7 +1,10 @@
 <.header>
   List Products
   <:actions>
-    <.link patch={~p"/admin/products/new"}>New Product</.link>
+    <div class="flex items-center justify-between">
+      <.search_by_name name={@name} />
+      <.link patch={~p"/admin/products/new"}>New Product</.link>
+    </div>
   </:actions>
 </.header>
 
