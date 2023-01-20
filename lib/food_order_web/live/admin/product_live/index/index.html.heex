@@ -8,31 +8,42 @@
   </:actions>
 </.header>
 
-<.table id="products" rows={@products} row_click={&JS.navigate(~p"/admin/products/#{&1}")}>
-  <:col :let={product} label="name"><%= product.name %></:col>
-  <:col :let={product} label="price"><%= product.price %></:col>
-  <:col :let={product} label="size"><%= product.size %></:col>
-
-  <:action :let={product}>
-    <div>
-      <.link navigate={~p"/admin/products/#{product}"}>Show</.link>
+<%= if @loading do %>
+  <div class="py-3 flex justify-center">
+    <div class="animate-bounce bg-white dark:bg-gray-800 p-2 w-10 h-10 ring-1 ring-gray-900/5 dark:ring-gray-200/20 shadow-lg rounded-full flex items-center justify-center">
+      <Heroicons.arrow_down solid class="h-6 w-6 text-orange-500 stroke-current" />
     </div>
-  </:action>
+  </div>
+<% else %>
+  <.table id="products" rows={@products} row_click={&JS.navigate(~p"/admin/products/#{&1}")}>
+    <:col :let={product} label="name"><%= product.name %></:col>
+    <:col :let={product} label="price"><%= product.price %></:col>
+    <:col :let={product} label="size"><%= product.size %></:col>
 
-  <:action :let={product}>
-    <div>
-      <.link patch={~p"/admin/products/#{product}/edit"}>Edit</.link>
-    </div>
-  </:action>
+    <:action :let={product}>
+      <div>
+        <.link navigate={~p"/admin/products/#{product}"}>Show</.link>
+      </div>
+    </:action>
 
-  <:action :let={product}>
-    <div>
-      <.link phx-click={JS.push("delete", value: %{id: product.id})} data-confirm="Are you sure?">
-        Delete
-      </.link>
-    </div>
-  </:action>
-</.table>
+    <:action :let={product}>
+      <div>
+        <.link patch={~p"/admin/products/#{product}/edit"}>Edit</.link>
+      </div>
+    </:action>
+
+    <:action :let={product}>
+      <div>
+        <.link
+          phx-click={JS.push("delete", value: %{id: product.id})}
+          data-confirm="Are you sure?"
+        >
+          Delete
+        </.link>
+      </div>
+    </:action>
+  </.table>
+<% end %>
 
 <.modal
   :if={@live_action in [:new, :edit]}
