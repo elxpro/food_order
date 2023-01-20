@@ -61,7 +61,7 @@ defmodule FoodOrderWeb.Admin.PageLive.Index.SearchByNameTest do
     |> render_submit()
   end
 
-  defp create_products() do
+  defp create_products do
     product_1 = product_fixture()
     product_2 = product_fixture(name: "pumpkin")
     {product_1, product_2}
