@@ -102,6 +102,19 @@ defmodule FoodOrderWeb.Admin.PageLive.IndexTest do
     end
   end
 
+  describe "sort" do
+    setup [:create_product, :register_and_log_in_admin_user]
+
+    test "sort using name path", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/admin/products")
+
+       view |> element("th>a", "name") |> render_click()
+       assert_patched(view, ~p"/admin/products?name=&sort_by=name&sort_order=asc&")
+       view |> element("th>a", "name") |> render_click()
+       assert_patched(view, ~p"/admin/products?name=&sort_by=name&sort_order=desc&")
+    end
+  end
+
   def create_product(_) do
     product = product_fixture()
     %{product: product}
