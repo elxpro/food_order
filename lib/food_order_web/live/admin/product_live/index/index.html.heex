@@ -2,7 +2,7 @@
   List Products
   <:actions>
     <div class="flex items-center justify-between">
-      <.search_by_name name={@options.name} />
+      <.search_by_name name={@options.name} names={@names} />
       <.link patch={~p"/admin/products/new"}>New Product</.link>
     </div>
   </:actions>

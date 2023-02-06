@@ -14,7 +14,7 @@ defmodule FoodOrderWeb.Admin.ProductLive.Index do
     products = Products.list_products(name: name, sort: sort)
 
     options = Map.merge(sort, %{name: name})
-    assigns = [options: options, products: products, loading: false]
+    assigns = [options: options, products: products, loading: false, names: []]
 
     socket =
       socket
@@ -35,6 +35,11 @@ defmodule FoodOrderWeb.Admin.ProductLive.Index do
   def handle_event("filter_by_name", %{"name" => name}, socket) do
     socket = apply_filters(socket, name)
     {:noreply, socket}
+  end
+
+  def handle_event("suggest", %{"name" => name}, socket) do
+    names = Products.list_suggest_names(name)
+    {:noreply, assign(socket, names: names)}
   end
 
   def handle_info({:list_product, name}, socket) do
@@ -86,7 +91,7 @@ defmodule FoodOrderWeb.Admin.ProductLive.Index do
 
   def search_by_name(assigns) do
     ~H"""
-    <form phx-submit="filter_by_name" class="mr-4">
+    <form phx-submit="filter_by_name" phx-change="suggest" class="mr-4">
       <div class="relative">
         <span class="absolute inset-y-0 pl-2 left-0 flex items-center">
           <Heroicons.magnifying_glass solid class="h-6 w-6 stroke-current" />
@@ -94,6 +99,7 @@ defmodule FoodOrderWeb.Admin.ProductLive.Index do
         <input
           type="text"
           autocomplete="off"
+          list="names"
           name="name"
           value={@name}
           placeholder="Search by name"
@@ -101,6 +107,10 @@ defmodule FoodOrderWeb.Admin.ProductLive.Index do
         />
       </div>
     </form>
+
+    <datalist id="names">
+      <option :for={name <- @names}><%= name %></option>
+    </datalist>
     """
   end
 end

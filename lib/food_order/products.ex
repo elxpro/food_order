@@ -112,4 +112,13 @@ defmodule FoodOrder.Products do
   def change_product(%Product{} = product, attrs \\ %{}) do
     Product.changeset(product, attrs)
   end
+
+  def list_suggest_names(name) do
+    name = "%" <> name <> "%"
+
+    Product
+    |> where([p], ilike(p.name, ^name))
+    |> select([p], p.name)
+    |> Repo.all()
+  end
 end
