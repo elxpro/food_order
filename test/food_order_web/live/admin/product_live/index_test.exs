@@ -108,10 +108,10 @@ defmodule FoodOrderWeb.Admin.PageLive.IndexTest do
     test "sort using name path", %{conn: conn} do
       {:ok, view, _html} = live(conn, ~p"/admin/products")
 
-       view |> element("th>a", "name") |> render_click()
-       assert_patched(view, ~p"/admin/products?name=&sort_by=name&sort_order=asc&")
-       view |> element("th>a", "name") |> render_click()
-       assert_patched(view, ~p"/admin/products?name=&sort_by=name&sort_order=desc&")
+      view |> element("th>a", "name") |> render_click()
+      assert_patched(view, ~p"/admin/products?name=&sort_by=name&sort_order=asc&")
+      view |> element("th>a", "name") |> render_click()
+      assert_patched(view, ~p"/admin/products?name=&sort_by=name&sort_order=desc&")
     end
   end
 

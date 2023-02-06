@@ -66,7 +66,6 @@ defmodule FoodOrderWeb.Admin.PageLive.Index.SearchByNameTest do
       |> render_change()
 
       assert view |> element("#names") |> render() =~ product_1.name
-
     end
   end
 

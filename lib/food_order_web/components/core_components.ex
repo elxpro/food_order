@@ -452,21 +452,27 @@ defmodule FoodOrderWeb.CoreComponents do
           <tr>
             <th :for={col <- @col} class="p-0 pb-4 pr-6 font-normal">
               <%= if col[:link] do %>
-                <.link patch={create_sort_link(col[:link], col[:options], col[:label])} >
+                <.link patch={create_sort_link(col[:link], col[:options], col[:label])}>
                   <div class="flex items-center">
                     <span class="pr-2">
                       <%= col[:label] %>
                     </span>
                     <%= if col[:options][:sort_order] == :asc do %>
-                      <Heroicons.bars_arrow_up solid class={[is_active(col),  "h-5 w-5 stroke-current"]} />
+                      <Heroicons.bars_arrow_up
+                        solid
+                        class={[is_active(col), "h-5 w-5 stroke-current"]}
+                      />
                     <% else %>
-                      <Heroicons.bars_arrow_down solid class={[is_active(col), "h-5 w-5 stroke-current"]} />
+                      <Heroicons.bars_arrow_down
+                        solid
+                        class={[is_active(col), "h-5 w-5 stroke-current"]}
+                      />
                     <% end %>
                   </div>
                 </.link>
               <% else %>
                 <%= col[:label] %>
-               <% end %>
+              <% end %>
             </th>
             <th class="relative p-0 pb-4"><span class="sr-only"><%= gettext("Actions") %></span></th>
           </tr>
@@ -510,7 +516,8 @@ defmodule FoodOrderWeb.CoreComponents do
   end
 
   defp is_active(col) do
-    Atom.to_string(col[:options][:sort_by]) == col[:label] && "text-orange-500" || "text-gray-500"
+    (Atom.to_string(col[:options][:sort_by]) == col[:label] && "text-orange-500") ||
+      "text-gray-500"
   end
 
   def create_sort_link(link, options, label) do
