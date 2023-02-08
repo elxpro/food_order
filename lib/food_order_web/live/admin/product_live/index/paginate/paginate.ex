@@ -8,7 +8,7 @@ defmodule FoodOrderWeb.Admin.ProductLive.Index.Paginate do
         :if={@options.page > 1}
         class="h-8 w-8 mr-1 flex justify-center items center cursor-pointer"
       >
-        <.link patch={~p"/admin/products?#{Map.update(@options, :page, @options.page, &(&1 - 1))}"}>
+        <.link patch={~p"/admin/products?#{Map.update(@options, :page, @options.page, &(&1 - 1))}"} data-role="previous">
           <Heroicons.backward solid class="h-6 w-6 text-orange-500 stroke-current" />
         </.link>
       </div>
@@ -29,7 +29,7 @@ defmodule FoodOrderWeb.Admin.ProductLive.Index.Paginate do
       </div>
 
       <div class="h-8 w-8 mr-1 flex justify-center items center cursor-pointer">
-        <.link patch={~p"/admin/products?#{Map.update(@options, :page, @options.page, &(&1 + 1))}"}>
+        <.link patch={~p"/admin/products?#{Map.update(@options, :page, @options.page, &(&1 + 1))}"} data-role="next">
           <Heroicons.forward solid class="h-6 w-6 text-orange-500 stroke-current" />
         </.link>
       </div>
