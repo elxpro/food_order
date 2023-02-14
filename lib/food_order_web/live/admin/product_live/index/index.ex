@@ -1,6 +1,7 @@
 defmodule FoodOrderWeb.Admin.ProductLive.Index do
   use FoodOrderWeb, :live_view
   alias __MODULE__.Paginate
+  alias __MODULE__.SelectPerPage
   alias FoodOrder.Products
   alias FoodOrder.Products.Product
   alias FoodOrderWeb.Admin.ProductLive.Form
