@@ -38,6 +38,5 @@ defmodule FoodOrderWeb.Admin.ProductLive.Index.PaginateTest do
         ~p"/admin/products?name=&page=2&per_page=4&sort_by=updated_at&sort_order=desc"
       )
     end
-
   end
 end
