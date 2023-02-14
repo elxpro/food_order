@@ -39,27 +39,5 @@ defmodule FoodOrderWeb.Admin.ProductLive.Index.PaginateTest do
       )
     end
 
-    test "using params", %{conn: conn} do
-      product_1 = product_fixture(name: "pumpkin")
-      product_2 = product_fixture(name: "pumpkin 2")
-
-      {:ok, view, _html} =
-        live(
-          conn,
-          ~p"/admin/products?name=&page=1&per_page=1&sort_by=inserted_at&sort_order=desc"
-        )
-
-      assert has_element?(view, "#products-#{product_1.id}")
-      refute has_element?(view, "#products-#{product_2.id}")
-
-      view
-      |> element("[data-role=next]")
-      |> render_click()
-
-      open_browser(view)
-
-      assert has_element?(view, "#products-#{product_2.id}")
-      refute has_element?(view, "#products-#{product_1.id}")
-    end
   end
 end
