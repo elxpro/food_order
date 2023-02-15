@@ -2,6 +2,7 @@
   List Products
   <:actions>
     <div class="flex items-center justify-between">
+      <.live_component module={SelectPerPage} id="select-per-page" options={@options} />
       <.live_component module={Paginate} id="pages" options={@options} />
       <.search_by_name name={@options.name} names={@names} />
       <.link patch={~p"/admin/products/new"}>New Product</.link>
