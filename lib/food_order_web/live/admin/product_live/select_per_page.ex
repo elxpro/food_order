@@ -15,6 +15,8 @@ defmodule FoodOrderWeb.Admin.ProductLive.Index.SelectPerPage do
 
   def handle_event("update_per_page", %{"per-page-select" => per_page}, socket) do
     options = socket.assigns.options
-    {:noreply, push_patch(socket, to: ~p"/admin/products?#{Map.put(options, :per_page, per_page)}")}
+
+    {:noreply,
+     push_patch(socket, to: ~p"/admin/products?#{Map.put(options, :per_page, per_page)}")}
   end
 end

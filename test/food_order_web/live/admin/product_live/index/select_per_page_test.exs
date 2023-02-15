@@ -9,10 +9,13 @@ defmodule FoodOrderWeb.Admin.ProductLive.Index.SelectPerPageTest do
       {:ok, view, _html} = live(conn, ~p"/admin/products")
 
       view
-      |> form("#select-per-page", %{"per-page-select" => 20})
+      |> form("#select-per-page", %{"per-page-select" => "20"})
       |> render_change()
 
-      assert_patched(view, ~p"/admin/products?name=&page=1&per_page=20&sort_by=updated_at&sort_order=desc")
+      assert_patched(
+        view,
+        ~p"/admin/products?name=&page=1&per_page=20&sort_by=updated_at&sort_order=desc"
+      )
     end
   end
 end

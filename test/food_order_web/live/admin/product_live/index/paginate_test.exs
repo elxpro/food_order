@@ -1,6 +1,5 @@
 defmodule FoodOrderWeb.Admin.ProductLive.Index.PaginateTest do
   use FoodOrderWeb.ConnCase
-  import FoodOrder.ProductsFixtures
   import Phoenix.LiveViewTest
 
   describe "paginate component" do
