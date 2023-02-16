@@ -50,4 +50,32 @@ defmodule FoodOrderWeb.PageLiveTest do
            |> element("[data-role=item-details][data-id=#{product.id}]>div>button")
            |> render() =~ "add"
   end
+
+  test "load more products", %{conn: conn} do
+    products = for _ <- 0..12, do: product_fixture()
+
+    {:ok, view, _html} = live(conn, ~p"/")
+
+    [products_page_1, products_page_2] = products |> Enum.chunk_every(8)
+
+    Enum.each(products_page_1, fn product ->
+      assert has_element?(view, "[data-role=item][data-id=#{product.id}]")
+    end)
+
+    Enum.each(products_page_2, fn product ->
+      refute has_element?(view, "[data-role=item][data-id=#{product.id}]")
+    end)
+
+    view
+    |> element("#load_more_products")
+    |> render_hook("load_more_products", %{})
+
+    view
+    |> element("#load_more_products")
+    |> render_hook("load_more_products", %{})
+
+    Enum.each(products_page_2, fn product ->
+      assert has_element?(view, "[data-role=item][data-id=#{product.id}]")
+    end)
+  end
 end
