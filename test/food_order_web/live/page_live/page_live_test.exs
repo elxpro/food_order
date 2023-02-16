@@ -70,6 +70,10 @@ defmodule FoodOrderWeb.PageLiveTest do
     |> element("#load_more_products")
     |> render_hook("load_more_products", %{})
 
+    view
+    |> element("#load_more_products")
+    |> render_hook("load_more_products", %{})
+
     Enum.each(products_page_2, fn product ->
       assert has_element?(view, "[data-role=item][data-id=#{product.id}]")
     end)
