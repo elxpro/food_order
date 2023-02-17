@@ -66,4 +66,55 @@ defmodule FoodOrder.Carts.Core.HandleCartsTest do
       assert [%{item: product_2, qty: 1}] == cart.items
     end
   end
+
+  describe "inc" do
+    test "inc the same element" do
+      product = product_fixture()
+
+      cart =
+        @start_cart
+        |> add(product)
+        |> add(product)
+        |> inc(product.id)
+
+      assert 3 == cart.total_qty
+
+      assert product.price
+             |> Money.add(product.price)
+             |> Money.add(product.price) == cart.total_price
+    end
+  end
+
+  describe "dec" do
+    test "dec the same element" do
+      product = product_fixture()
+
+      cart =
+        @start_cart
+        |> add(product)
+        |> add(product)
+        |> dec(product.id)
+
+      assert 1 == cart.total_qty
+
+      assert product.price
+             |> Money.add(product.price)
+             |> Money.subtract(product.price) == cart.total_price
+    end
+
+    test "dec until remove the product" do
+      product = product_fixture()
+
+      cart =
+        @start_cart
+        |> add(product)
+        |> add(product)
+        |> dec(product.id)
+        |> dec(product.id)
+
+      assert 0 == cart.total_qty
+      assert [] == cart.items
+      assert Money.new(0) == cart.total_price
+    end
+  end
 end
