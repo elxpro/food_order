@@ -39,4 +39,31 @@ defmodule FoodOrder.Carts.Core.HandleCartsTest do
       assert [%{item: product, qty: 2}] == cart.items
     end
   end
+
+  describe "remove" do
+    test "remote an item" do
+      product = product_fixture()
+      product_2 = product_fixture()
+
+      cart =
+        @start_cart
+        |> add(product)
+        |> add(product)
+        |> add(product_2)
+
+      assert 3 == cart.total_qty
+
+      assert product.price
+             |> Money.add(product.price)
+             |> Money.add(product_2.price) == cart.total_price
+
+      assert [%{item: product, qty: 2}, %{item: product_2, qty: 1}] == cart.items
+
+      cart = remove(cart, product.id)
+
+      assert 1 == cart.total_qty
+      assert product_2.price == cart.total_price
+      assert [%{item: product_2, qty: 1}] == cart.items
+    end
+  end
 end

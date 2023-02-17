@@ -17,7 +17,7 @@ defmodule FoodOrder.Carts.Core.HandleCarts do
     }
   end
 
-  def new_item(items, item) do
+  defp new_item(items, item) do
     is_there_item_id? = Enum.find(items, &(&1.item.id == item.id))
 
     if is_there_item_id? == nil do
@@ -27,6 +27,23 @@ defmodule FoodOrder.Carts.Core.HandleCarts do
       |> Map.new(fn item -> {item.item.id, item} end)
       |> Map.update!(item.id, &%{&1 | qty: &1.qty + 1})
       |> Map.values()
+    end
+  end
+
+  def remove(cart, item_id) do
+    {items, item_removed} = Enum.reduce(cart.items, {[], nil}, &remove_item(&1, &2, item_id))
+    total_price_to_remove_from_item = Money.multiply(item_removed.item.price, item_removed.qty)
+    total_price = Money.subtract(cart.total_price, total_price_to_remove_from_item)
+    %{cart | items: items, total_qty: cart.total_qty - item_removed.qty, total_price: total_price}
+  end
+
+  defp remove_item(item, acc, item_id) do
+    {list, item_acc} = acc
+
+    if item.item.id == item_id do
+      {list, item}
+    else
+      {[item] ++ list, item_acc}
     end
   end
 end
