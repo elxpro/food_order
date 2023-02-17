@@ -9,7 +9,6 @@ defmodule FoodOrder.Carts.Core.HandleCartsTest do
   @start_cart %Cart{
     id: 444_444,
     items: [],
-    total_items: 0,
     total_price: %Money{amount: 0, currency: :USD},
     total_qty: 0
   }
@@ -27,9 +26,17 @@ defmodule FoodOrder.Carts.Core.HandleCartsTest do
       cart = add(@start_cart, product)
 
       assert 1 == cart.total_qty
-      assert [product] == cart.items
+      assert [%{item: product, qty: 1}] == cart.items
       assert product.price == cart.total_price
-      assert 1 == cart.total_items
+    end
+
+    test "add the same item twice" do
+      product = product_fixture()
+      cart = @start_cart |> add(product) |> add(product)
+
+      assert 2 == cart.total_qty
+      assert Money.add(product.price, product.price) == cart.total_price
+      assert [%{item: product, qty: 2}] == cart.items
     end
   end
 end
