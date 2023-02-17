@@ -1,7 +1,6 @@
 defmodule FoodOrder.Carts.Data.Cart do
   defstruct id: nil,
             items: [],
-            total_items: 0,
             total_price: Money.new(0),
             total_qty: 0
 
