@@ -4,6 +4,7 @@ defmodule FoodOrder.Application do
   @moduledoc false
 
   use Application
+  alias FoodOrder.Carts.Server.CartSession
 
   @impl true
   def start(_type, _args) do
@@ -17,7 +18,8 @@ defmodule FoodOrder.Application do
       # Start Finch
       {Finch, name: FoodOrder.Finch},
       # Start the Endpoint (http/https)
-      FoodOrderWeb.Endpoint
+      FoodOrderWeb.Endpoint,
+      CartSession
       # Start a worker by calling: FoodOrder.Worker.start_link(arg)
       # {FoodOrder.Worker, arg}
     ]
