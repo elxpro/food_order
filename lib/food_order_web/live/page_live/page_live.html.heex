@@ -1,25 +1,27 @@
-<section class="py-16" data-role="hero">
-  <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
-    <div data-role="hero-cta">
-      <h6 class="text-lg">Make your order</h6>
-      <h1 class="text-3xl font-bold">Right now!</h1>
-      <button class="px-6 py-2 bg-orange-500 text-white font-bold mt-5 rounded-full">
-        Order now
-      </button>
+<div id="cart-session" phx-hook="CartSession">
+  <section class="py-16" data-role="hero">
+    <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+      <div data-role="hero-cta">
+        <h6 class="text-lg">Make your order</h6>
+        <h1 class="text-3xl font-bold">Right now!</h1>
+        <button class="px-6 py-2 bg-orange-500 text-white font-bold mt-5 rounded-full">
+          Order now
+        </button>
+      </div>
+      <img src={~p"/images/hero.svg"} alt="" data-role="hero-img" />
     </div>
-    <img src={~p"/images/hero.svg"} alt="" data-role="hero-img" />
-  </div>
-</section>
+  </section>
 
-<section class="container mx-auto py-8" data-role="products-section">
-  <h1 class="text-lg font-bold mb-8">All foods</h1>
-  <div
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
-    data-role="products-list"
-    id="products-list"
-    phx-update="append"
-  >
-    <.live_component :for={product <- @products} module={Item} id={product.id} product={product} />
-  </div>
-</section>
-<div id="load_more_products" phx-hook="LoadMoreProducts"></div>
+  <section class="container mx-auto py-8" data-role="products-section">
+    <h1 class="text-lg font-bold mb-8">All foods</h1>
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+      data-role="products-list"
+      id="products-list"
+      phx-update="append"
+    >
+      <.live_component :for={product <- @products} module={Item} id={product.id} product={product} />
+    </div>
+  </section>
+  <div id="load_more_products" phx-hook="LoadMoreProducts"></div>
+</div>
