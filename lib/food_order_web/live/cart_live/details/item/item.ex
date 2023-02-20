@@ -20,15 +20,17 @@ defmodule FoodOrderWeb.CartLive.Details.Item do
         <div class="flex items-center">
           <button
             data-role="dec"
+            data-id={@id}
             phx-click="dec"
             phx-target={@myself}
             class="p-1 m-2 rounded-full text-white font-bold bg-orange-500"
           >
             -
           </button>
-          <span><%= @item.qty %> Item(s)</span>
+          <span data-role="items" data-id={@id}><%= @item.qty %> Item(s)</span>
           <button
-            data-role="add"
+            data-role="inc"
+            data-id={@id}
             phx-click="inc"
             phx-target={@myself}
             class="p-1 m-2 rounded-full text-white font-bold bg-orange-500"
@@ -39,9 +41,11 @@ defmodule FoodOrderWeb.CartLive.Details.Item do
       </div>
 
       <div class="flex flex-1 items-center" data-role="total-item">
-        <span class="font-bold text-lg"><%= @item.item.price %></span>
+        <span class="font-bold text-lg" data-role="price" data-id={@id}><%= @item.item.price %></span>
         <button
           phx-click="remove"
+          data-role="remove"
+          data-id={@id}
           phx-target={@myself}
           class="ml-2 w-6 h-6 rounded-full text-white bg-orange-500 font-bold"
         >

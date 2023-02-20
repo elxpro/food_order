@@ -78,4 +78,18 @@ defmodule FoodOrderWeb.PageLiveTest do
       assert has_element?(view, "[data-role=item][data-id=#{product.id}]")
     end)
   end
+
+  test "add a new item on cart", %{conn: conn} do
+    product = product_fixture()
+    {:ok, view, _html} = live(conn, ~p"/")
+    product_element = "[data-id=#{product.id}]>div>div>button"
+
+    {:ok, _view, html} =
+      view
+      |> element(product_element)
+      |> render_click()
+      |> follow_redirect(conn, ~p"/")
+
+    assert html =~ "Item added to cart"
+  end
 end
