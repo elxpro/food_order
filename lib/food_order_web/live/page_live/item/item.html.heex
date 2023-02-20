@@ -7,6 +7,6 @@
   <img src={~p"/images/#{@product.image_url}"} alt="" class="h-40 mb-4 mx-auto" />
   <div class="text-center" data-role="item-details" data-id={@product.id}>
     <.product_detail name={@product.name} size={@product.size} />
-    <.product_info price={@product.price} />
+    <.product_info price={@product.price} myself={@myself} />
   </div>
 </div>
