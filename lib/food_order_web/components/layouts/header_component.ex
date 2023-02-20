@@ -36,13 +36,15 @@ defmodule FoodOrderWeb.HeaderComponent do
             <.link href={~p"/users/log_in"}>Log in</.link>
           </li>
         <% end %>
-        <a
-          href={~p"/cart"}
-          class="ml-6 p-4 bg-orange-500 rounded-full text-neutral-100 flex group hover:text-orange-500 hover:bg-orange-100 transition"
-        >
-          <span class="text-xs"><%= FoodOrder.Carts.get(@cart_id).total_qty %></span>
-          <Heroicons.shopping_cart solid class="h-5 w-5 stroke-current" />
-        </a>
+        <%= if !is_nil(@cart_id) do %>
+          <a
+            href={~p"/cart"}
+            class="ml-6 p-4 bg-orange-500 rounded-full text-neutral-100 flex group hover:text-orange-500 hover:bg-orange-100 transition"
+          >
+            <span class="text-xs"><%= FoodOrder.Carts.get(@cart_id).total_qty %></span>
+            <Heroicons.shopping_cart solid class="h-5 w-5 stroke-current" />
+          </a>
+        <% end %>
       </ul>
     </nav>
     """
