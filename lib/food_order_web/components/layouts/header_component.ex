@@ -40,7 +40,7 @@ defmodule FoodOrderWeb.HeaderComponent do
           href={~p"/cart"}
           class="ml-6 p-4 bg-orange-500 rounded-full text-neutral-100 flex group hover:text-orange-500 hover:bg-orange-100 transition"
         >
-          <span class="text-xs">0</span>
+          <span class="text-xs"><%= FoodOrder.Carts.get(@cart_id).total_qty %></span>
           <Heroicons.shopping_cart solid class="h-5 w-5 stroke-current" />
         </a>
       </ul>
