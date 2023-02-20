@@ -9,6 +9,10 @@ defmodule FoodOrderWeb.CartLive do
     {:ok, assign(socket, cart: cart)}
   end
 
+  def handle_info({:update, cart}, socket) do
+    {:noreply, assign(socket, cart: cart)}
+  end
+
   defp empty_cart(assigns) do
     ~H"""
     <div class="py-16 container mx-auto text-center">
