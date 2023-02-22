@@ -1,4 +1,4 @@
-defmodule FoodOrderWeb.Admin.PageLive.IndexTest do
+defmodule FoodOrderWeb.Admin.ProductLive.IndexTest do
   use FoodOrderWeb.ConnCase
   import FoodOrder.ProductsFixtures
   import Phoenix.LiveViewTest

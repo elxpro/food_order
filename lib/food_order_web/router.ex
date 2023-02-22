@@ -77,6 +77,8 @@ defmodule FoodOrderWeb.Router do
     live_session :require_admin,
       on_mount: [{FoodOrderWeb.UserAuth, :ensure_authenticated}, FoodOrderWeb.RequireAdmin] do
       scope "/admin", Admin do
+        live "/orders", OrderLive.Index, :index
+
         live "/products", ProductLive.Index, :index
         live "/products/new", ProductLive.Index, :new
         live "/products/:id/edit", ProductLive.Index, :edit
