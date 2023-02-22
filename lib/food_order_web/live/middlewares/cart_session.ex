@@ -7,6 +7,7 @@ defmodule FoodOrderWeb.Middlewares.CartSession do
   def on_mount(:default, _, session, socket) do
     cart_id = get_connect_params(socket)["cart_id"]
     user_token = session["user_token"]
+
     socket =
       socket
       |> assign_user(user_token)
