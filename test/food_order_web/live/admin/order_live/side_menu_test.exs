@@ -28,7 +28,6 @@ defmodule FoodOrderWeb.Admin.OrderLive.Index.SideMenuTest do
 
       assert has_element?(view, "#side-menu>nav>div>a>span", "Delivered")
       assert has_element?(view, "#side-menu>nav>div>a>span", "30")
-
     end
   end
 end
