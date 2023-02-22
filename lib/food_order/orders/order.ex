@@ -27,7 +27,7 @@ defmodule FoodOrder.Orders.Order do
     order
     |> cast(attrs, @fields ++ @required)
     |> validate_required(@required)
-    |> validate_number(:total_quantity, greate_than: 0)
+    |> validate_number(:total_quantity, greater_than: 0)
     |> cast_assoc(:items, with: &Item.changeset/2)
   end
 end
