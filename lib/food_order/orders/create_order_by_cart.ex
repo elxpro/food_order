@@ -26,8 +26,9 @@ defmodule FoodOrder.Orders.CreateOrderByCart do
       user_id: payload["current_user"],
       items: items,
       total_quantity: cart.total_qty,
-      total_price: cart.total_price,
+      total_price: cart.total_price
     }
+
     Order.changeset(%Order{}, attrs)
   end
 

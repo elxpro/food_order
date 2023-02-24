@@ -20,9 +20,8 @@ defmodule FoodOrder.Orders.CreateOrderByCartTest do
       payload = %{
         "address" => "123",
         "current_user" => user.id,
-        "phone_number" => "123",
+        "phone_number" => "123"
       }
-
 
       {:ok, result} = CreateOrderByCart.execute(payload)
 
