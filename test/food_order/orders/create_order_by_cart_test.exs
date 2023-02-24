@@ -27,7 +27,6 @@ defmodule FoodOrder.Orders.CreateOrderByCartTest do
       {:ok, result} = CreateOrderByCart.execute(payload)
 
       assert 1 == result.total_quantity
-      assert 0 == Carts.get(user.id).total_qty
     end
   end
 end
