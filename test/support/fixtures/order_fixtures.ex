@@ -14,8 +14,11 @@ defmodule FoodOrder.OrdersFixtures do
         total_price: product.price
       })
 
-    %Order{}
-    |> Order.changeset(order_attrs)
-    |> Repo.insert()
+    {:ok, order} =
+      %Order{}
+      |> Order.changeset(order_attrs)
+      |> Repo.insert()
+
+    order
   end
 end

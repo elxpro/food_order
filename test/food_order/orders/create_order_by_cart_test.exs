@@ -27,5 +27,20 @@ defmodule FoodOrder.Orders.CreateOrderByCartTest do
 
       assert 1 == result.total_quantity
     end
+
+    test "error creating order" do
+      user = user_fixture()
+      Carts.create(user.id)
+
+      payload = %{
+        "address" => "123",
+        "current_user" => user.id,
+        "phone_number" => "123"
+      }
+
+      {:error, changeset} = CreateOrderByCart.execute(payload)
+
+      assert "must be greater than 0" in errors_on(changeset).total_quantity
+    end
   end
 end
