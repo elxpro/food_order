@@ -28,6 +28,11 @@ defmodule FoodOrder.Carts.Server.CartSession do
     {:noreply, name}
   end
 
+  def handle_cast({:delete, cart_id}, name) do
+    :ets.delete(name, cart_id)
+    {:noreply, name}
+  end
+
   def handle_call({:get, cart_id}, _from, name) do
     {:ok, cart} = find_cart(name, cart_id)
     {:reply, cart, name}

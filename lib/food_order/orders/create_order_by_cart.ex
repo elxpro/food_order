@@ -32,8 +32,9 @@ defmodule FoodOrder.Orders.CreateOrderByCart do
   end
 
   defp remove_cache({:error, _} = err), do: err
+
   defp remove_cache({:ok, order} = result) do
-    # TODO remove cache
+    Carts.delete(order.user_id)
     result
   end
 end

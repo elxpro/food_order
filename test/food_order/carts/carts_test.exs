@@ -59,4 +59,12 @@ defmodule FoodOrder.CartsTest do
       assert 1 == remove(cart_id, product.id).total_qty
     end
   end
+
+  describe "delete" do
+    test "delete cart" do
+      cart_id = Ecto.UUID.generate()
+      create(cart_id)
+      assert :ok == delete(cart_id)
+    end
+  end
 end
