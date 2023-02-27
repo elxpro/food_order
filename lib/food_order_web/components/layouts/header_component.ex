@@ -18,7 +18,7 @@ defmodule FoodOrderWeb.HeaderComponent do
             </li>
           <% else %>
             <li class="ml-6">
-              My Orders
+              <.link href={~p"/customer/orders"}>My Orders</.link>
             </li>
           <% end %>
           <li class="ml-6">

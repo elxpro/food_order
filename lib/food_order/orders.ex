@@ -1,5 +1,6 @@
 defmodule FoodOrder.Orders do
   alias __MODULE__.Events.NewOrder
+  alias __MODULE__.Events.UpdateOrder
 
   alias __MODULE__.{
     AllStatusOrders,
@@ -10,6 +11,13 @@ defmodule FoodOrder.Orders do
   }
 
   defdelegate subscribe_to_receive_new_orders, to: NewOrder, as: :subscribe
+
+  defdelegate subscribe_admin_orders_update, to: UpdateOrder, as: :subscribe_admin_orders_update
+  defdelegate subscribe_update_order(id), to: UpdateOrder, as: :subscribe_update_order
+  defdelegate subscribe_update_user_row(user_id), to: UpdateOrder, as: :subscribe_update_user_row
+
+
+
   defdelegate all_status_orders, to: AllStatusOrders, as: :execute
   defdelegate create_order_by_cart(payload), to: CreateOrderByCart, as: :execute
 
