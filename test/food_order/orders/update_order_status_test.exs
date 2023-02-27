@@ -5,7 +5,6 @@ defmodule FoodOrder.Orders.UpdateOrderStatusTest do
   import FoodOrder.OrdersFixtures
   import FoodOrder.ProductsFixtures
 
-
   alias FoodOrder.Orders.UpdateOrderStatus
 
   test "return orders by user id" do
