@@ -2,6 +2,6 @@
   <%= if @cart.total_qty == 0 do %>
     <.empty_cart />
   <% else %>
-    <.live_component module={Details} id="cart-details" cart={@cart} />
+    <.live_component module={Details} id="cart-details" cart={@cart} current_user={@current_user} />
   <% end %>
 </section>
