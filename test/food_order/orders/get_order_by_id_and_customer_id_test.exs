@@ -5,7 +5,6 @@ defmodule FoodOrder.Orders.GetOrderByIdAndCustomerIdTest do
   import FoodOrder.OrdersFixtures
   import FoodOrder.ProductsFixtures
 
-
   alias FoodOrder.Orders.GetOrderByIdAndCustomerId
 
   test "return orders from using order_id and customer_id" do
@@ -15,5 +14,4 @@ defmodule FoodOrder.Orders.GetOrderByIdAndCustomerIdTest do
 
     assert order.id == GetOrderByIdAndCustomerId.execute(order.id, order.user_id).id
   end
-
 end

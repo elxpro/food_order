@@ -5,7 +5,6 @@ defmodule FoodOrder.Orders.ListOrdersByStatusTest do
   import FoodOrder.OrdersFixtures
   import FoodOrder.ProductsFixtures
 
-
   alias FoodOrder.Orders.ListOrdersByStatus
 
   test "return orders from using order_id and customer_id" do
@@ -14,5 +13,4 @@ defmodule FoodOrder.Orders.ListOrdersByStatusTest do
     order_fixtures(product, user)
     assert 1 == ListOrdersByStatus.execute(:NOT_STARTED) |> Enum.count()
   end
-
 end

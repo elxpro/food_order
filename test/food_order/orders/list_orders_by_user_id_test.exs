@@ -5,7 +5,6 @@ defmodule FoodOrder.Orders.ListOrdersByUserIdTest do
   import FoodOrder.OrdersFixtures
   import FoodOrder.ProductsFixtures
 
-
   alias FoodOrder.Orders.ListOrdersByUserId
 
   test "return orders by user id" do
@@ -14,5 +13,4 @@ defmodule FoodOrder.Orders.ListOrdersByUserIdTest do
     order_fixtures(product, user)
     assert 1 == ListOrdersByUserId.execute(user.id) |> Enum.count()
   end
-
 end
