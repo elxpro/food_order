@@ -2,4 +2,8 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+.sortable-ghost{
+    opacity: 0.1
+}
+
 /* This file is for your main application CSS */
