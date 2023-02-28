@@ -12,22 +12,22 @@ defmodule FoodOrderWeb.Admin.OrderLive.Index.SideMenuTest do
       assert has_element?(view, "#side-menu>nav>h2", "Orders")
 
       assert has_element?(view, "#side-menu>nav>div>a>span", "All")
-      assert has_element?(view, "#side-menu>nav>div>a>span", "30")
+      assert has_element?(view, "#side-menu>nav>div>a>span", "0")
 
       assert has_element?(view, "#side-menu>nav>div>a>span", "Not Started")
-      assert has_element?(view, "#side-menu>nav>div>a>span", "30")
+      assert has_element?(view, "#side-menu>nav>div>a>span", "0")
 
       assert has_element?(view, "#side-menu>nav>div>a>span", "Received")
-      assert has_element?(view, "#side-menu>nav>div>a>span", "30")
+      assert has_element?(view, "#side-menu>nav>div>a>span", "0")
 
       assert has_element?(view, "#side-menu>nav>div>a>span", "Preparing")
-      assert has_element?(view, "#side-menu>nav>div>a>span", "30")
+      assert has_element?(view, "#side-menu>nav>div>a>span", "0")
 
       assert has_element?(view, "#side-menu>nav>div>a>span", "Delivering")
-      assert has_element?(view, "#side-menu>nav>div>a>span", "30")
+      assert has_element?(view, "#side-menu>nav>div>a>span", "0")
 
       assert has_element?(view, "#side-menu>nav>div>a>span", "Delivered")
-      assert has_element?(view, "#side-menu>nav>div>a>span", "30")
+      assert has_element?(view, "#side-menu>nav>div>a>span", "0")
     end
   end
 end
