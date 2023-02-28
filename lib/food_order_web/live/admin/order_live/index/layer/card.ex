@@ -3,7 +3,7 @@ defmodule FoodOrderWeb.Admin.OrderLive.Index.Layer.Card do
 
   def render(assigns) do
     ~H"""
-    <li id={@id} class="block p-5 mb-5 bg-white rounded-md shadow">
+    <li id={@id} class="block p-5 mb-5 bg-white rounded-md shadow draggable">
       <a href="#">
         <div class="flex-justify-between mb-2">
           <p class="text-xs font-medium leading snug text-gray-900"><%= @id %></p>

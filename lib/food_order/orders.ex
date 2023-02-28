@@ -7,7 +7,8 @@ defmodule FoodOrder.Orders do
     CreateOrderByCart,
     GetOrderByIdAndCustomerId,
     ListOrdersByStatus,
-    ListOrdersByUserId
+    ListOrdersByUserId,
+    UpdateOrderStatus
   }
 
   defdelegate subscribe_to_receive_new_orders, to: NewOrder, as: :subscribe
@@ -27,4 +28,5 @@ defmodule FoodOrder.Orders do
 
   defdelegate list_orders_by_status(status), to: ListOrdersByStatus, as: :execute
   defdelegate list_orders_by_user_id(user_id), to: ListOrdersByUserId, as: :execute
+  defdelegate update_order_status(order_id, old_status, new_status), to: UpdateOrderStatus, as: :execute
 end
