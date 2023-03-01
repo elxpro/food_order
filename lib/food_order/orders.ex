@@ -32,6 +32,6 @@ defmodule FoodOrder.Orders do
   defdelegate update_order_status(order_id, old_status, new_status), to: UpdateOrderStatus, as: :execute
 
   def get_status_list() do
-    Ecto.Enum.values(Order, :status)
+    Order |> Ecto.Enum.values(:status) |> Enum.with_index()
   end
 end

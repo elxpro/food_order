@@ -8,9 +8,9 @@
 
     <ul>
       <li
-        :for={status <- @status_list}
+        :for={{status, index} <- @status_list}
         id={status}
-        class={[status == @order.status && "text-orange-500", "text-sm md:text-xl"]}
+        class={[index <= @status_list[@order.status] && "text-orange-500", "text-sm md:text-xl"]}
       >
         <div class="flex items-center ">
           <.get_icon status={status} />
@@ -19,7 +19,7 @@
           </span>
         </div>
         <div class={[
-          status == @order.status && "border-orange-500",
+          index <= @status_list[@order.status] && "border-orange-500",
           (status == :DELIVERED && "h-0") || "h-14",
           "relative border-l-4 left-4 my-2"
         ]}>
