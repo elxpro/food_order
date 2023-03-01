@@ -1,6 +1,7 @@
 defmodule FoodOrder.Orders do
   alias __MODULE__.Events.NewOrder
   alias __MODULE__.Events.UpdateOrder
+  alias __MODULE__.Order
 
   alias __MODULE__.{
     AllStatusOrders,
@@ -29,4 +30,8 @@ defmodule FoodOrder.Orders do
   defdelegate list_orders_by_status(status), to: ListOrdersByStatus, as: :execute
   defdelegate list_orders_by_user_id(user_id), to: ListOrdersByUserId, as: :execute
   defdelegate update_order_status(order_id, old_status, new_status), to: UpdateOrderStatus, as: :execute
+
+  def get_status_list() do
+    Ecto.Enum.values(Order, :status)
+  end
 end
