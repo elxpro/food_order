@@ -1,6 +1,6 @@
 defmodule FoodOrderWeb.Customer.OrderLive.Index do
   use FoodOrderWeb, :live_view
-  import Phoenix.Naming, only: [humanize: 1]
+  alias __MODULE__.Row
   alias FoodOrder.Orders
 
 
@@ -11,6 +11,11 @@ defmodule FoodOrderWeb.Customer.OrderLive.Index do
     orders = Orders.list_orders_by_user_id(current_user.id)
     socket = socket |> assign(orders: orders)
     {:ok, socket}
+  end
+
+  def handle_info({:update_order_user_row, order}, socket) do
+    send_update(Row, id: order.id, order_updated: order)
+    {:noreply, socket}
   end
 
 
@@ -26,21 +31,7 @@ defmodule FoodOrderWeb.Customer.OrderLive.Index do
           </thead>
 
           <tbody>
-            <tr :for={order <- @orders} id={order.id}>
-              <td class="border px-4 py-2">
-                <.link href={~p"/customer/orders/#{order.id}"}><%= order.id %></.link>
-              </td>
-              <td class="border px-4 py-2">
-                <%= order.address %> - <%= order.phone_number %>
-              </td>
-              <td class={[order.status != :DELIVERED && "text-orange-600" || "" , "border px-4 py-2"]}>
-              <%= humanize(order.status) %>
-              </td>
-              <td class="border px-4 py-2">
-              <%= order.updated_at |> NaiveDateTime.to_string() %>
-              </td>
-            </tr>
-
+            <.live_component module={Row} :for={order <- @orders} id={order.id} order={order} />
           </tbody>
         </table>
       </div>
