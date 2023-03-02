@@ -4,6 +4,7 @@ defmodule FoodOrderWeb.Admin.OrderLive.Index.LayerTest do
   import FoodOrder.ProductsFixtures
   import FoodOrder.OrdersFixtures
   import Phoenix.LiveViewTest
+  alias FoodOrder.Orders
 
   describe "layer test" do
     setup [:register_and_log_in_admin_user]
@@ -50,5 +51,20 @@ defmodule FoodOrderWeb.Admin.OrderLive.Index.LayerTest do
 
       assert has_element?(view, "#NOT_STARTED>##{order.id}")
     end
+
+    test "send to another layer using the handle_info", %{conn: conn, user: user} do
+      product = product_fixture()
+      order = order_fixtures(product, user)
+
+      {:ok, view, _html} = live(conn, ~p"/admin/orders")
+      assert has_element?(view, "#NOT_STARTED>##{order.id}")
+      refute has_element?(view, "#RECEIVED>##{order.id}")
+
+      Orders.update_order_status(order.id, "NOT_STARTED", "RECEIVED")
+
+      assert has_element?(view, "#RECEIVED>##{order.id}")
+      refute has_element?(view, "#NOT_STARTED>##{order.id}")
+    end
+
   end
 end
