@@ -28,7 +28,7 @@ defmodule FoodOrderWeb.Customer.OrderLive.Index do
           <tbody>
             <tr :for={order <- @orders} id={order.id}>
               <td class="border px-4 py-2">
-                <.link href={~p"/customer/order-status/#{order.id}"}><%= order.id %></.link>
+                <.link href={~p"/customer/orders/#{order.id}"}><%= order.id %></.link>
               </td>
               <td class="border px-4 py-2">
                 <%= order.address %> - <%= order.phone_number %>
