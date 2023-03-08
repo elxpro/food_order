@@ -5,16 +5,16 @@ defmodule ProductUploadConfig do
     get_allow_options(Mix.env())
   end
 
-  defp get_allow_options(env) when env in [:test, :dev] do
+  defp get_allow_options(env) when env in [:test, :prod] do
     [accept: ~w/.png .jpeg .jpg/, max_entries: 1]
   end
 
-  defp get_allow_options(:prod) do
+  defp get_allow_options(:dev) do
     [accept: ~w/.png .jpeg .jpg/, max_entries: 1, external: &generate_metadata/2]
   end
 
   def get_image_url(entry) do
-    if Mix.env() in [:test, :dev] do
+    if Mix.env() in [:test, :prod] do
       "/uploads/#{filename(entry)}"
     else
       Path.join(s3_url(), filename(entry))
@@ -22,7 +22,7 @@ defmodule ProductUploadConfig do
   end
 
   def consume_entries(path, entry) do
-    if Mix.env() in [:test, :dev] do
+    if Mix.env() in [:test, :prod] do
       file_name = filename(entry)
       dest = Path.join("priv/static/uploads", file_name)
       {:ok, File.cp!(path, dest)}
@@ -35,6 +35,7 @@ defmodule ProductUploadConfig do
   defp s3_url(), do: "//#{@s3_bucket}.s3.amazonaws.com"
 
   defp generate_metadata(entry, socket) do
+    uploads = socket.assigns.uploads
     bucket = System.fetch_env!("AWS_BUCKET")
     key = filename(entry)
 
@@ -48,7 +49,7 @@ defmodule ProductUploadConfig do
       SimpleS3Upload.sign_form_upload(config, bucket,
         key: key,
         content_type: entry.client_type,
-        max_file_size: socket.assigns.uploads.max_file_size,
+        max_file_size: uploads[entry.upload_config].max_file_size,
         expires_in: :timer.hours(1)
       )
 
