@@ -2,8 +2,8 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
   use FoodOrderWeb, :live_component
   alias FoodOrder.Products
   import Phoenix.Naming, only: [humanize: 1]
+  import ProductUploadConfig
 
-  @upload_options [accept: ~w/.png .jpeg .jpg/, max_entries: 1]
 
   def update(%{product: product} = assigns, socket) do
     changeset = Products.change_product(product)
@@ -12,65 +12,7 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
      socket
      |> assign(assigns)
      |> assign(changeset: changeset)
-     |> allow_upload(:image_url, @upload_options)}
-  end
-
-  def render(assigns) do
-    ~H"""
-    <div>
-      <.simple_form
-        :let={f}
-        for={@changeset}
-        id="product-form"
-        phx-change="validate"
-        phx-submit="save"
-        phx-target={@myself}
-      >
-        <.input field={{f, :name}} label="name" />
-        <.input field={{f, :description}} type="textarea" label="description" />
-
-        <.input field={{f, :price}} label="Price" />
-
-        <div class="container" phx-drop-target={@uploads.image_url.ref}>
-          <.live_file_input upload={@uploads.image_url} /> or drag and drop
-        </div>
-
-        <div>
-          Add up to <%= @uploads.image_url.max_entries %> photos
-          (max <%= trunc(@uploads.image_url.max_file_size / 1_000_000) %> mb each)
-        </div>
-
-        <article
-          :for={entry <- @uploads.image_url.entries}
-          class="flex items-center justify-between"
-          id={entry.ref}
-        >
-          <figure class="bg-orange-100 flex flex-col items-center justify-between rounded-md p-4">
-            <.live_img_preview entry={entry} class="w-16 h-16" />
-            <figcaption class="text-orange-800"><%= entry.client_name %></figcaption>
-          </figure>
-
-          <div class="flex flex-col w-full items-center p-8">
-            <p
-              :for={err <- upload_errors(@uploads.image_url, entry)}
-              class="text-red-500 flex flex-col"
-            >
-              <%= humanize(err) %>
-            </p>
-            <progress value={entry.progress} max="100"><%= entry.progress %>%</progress>
-          </div>
-
-          <button phx-click="cancel" phx-target={@myself} phx-value-ref={entry.ref}>
-            <Heroicons.x_mark outline class="h-5 w-5 text-red-500 stroke-current" />
-          </button>
-        </article>
-
-        <:actions>
-          <.button phx-disable-with="Saving...">Save Product</.button>
-        </:actions>
-      </.simple_form>
-    </div>
-    """
+     |> allow_upload(:image_url, upload_options())}
   end
 
   def handle_event("cancel", %{"ref" => ref}, socket) do
