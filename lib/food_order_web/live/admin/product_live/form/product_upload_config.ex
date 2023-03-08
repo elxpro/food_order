@@ -3,23 +3,30 @@ defmodule ProductUploadConfig do
     get_allow_options(Mix.env())
   end
 
-  def get_allow_options(:test) do
+  def get_allow_options(env) when env in [:test, :dev] do
     [accept: ~w/.png .jpeg .jpg/, max_entries: 1]
   end
 
-  def get_allow_options(:dev) do
+  def get_allow_options(:prod) do
     [accept: ~w/.png .jpeg .jpg/, max_entries: 1, external: &s3_metadata/2]
   end
 
   def get_image_url(entry) do
-    Path.join(s3_url(), filename(entry))
+    if Mix.env() in [:test, :dev] do
+      "/uploads/#{filename(entry)}"
+    else
+      Path.join(s3_url(), filename(entry))
+    end
   end
 
   def consume_entries(meta, entry) do
-    # file_name = filename(entry)
-    # dest = Path.join("priv/static/uploads", file_name)
-    # {:ok, File.cp!(path, dest)}
-    {:ok, ""}
+    if Mix.env() in [:test, :dev] do
+      file_name = filename(entry)
+      dest = Path.join("priv/static/uploads", file_name)
+      {:ok, File.cp!(meta.path, dest)}
+    else
+      {:ok, ""}
+    end
   end
 
   defp s3_url do

@@ -8,7 +8,7 @@
 
 <.list>
   <:item title="Image">
-    <img src={~p"/images/#{@product.image_url}"} alt="" class="h-40 mb-4 mx-auto" />
+    <img src={@product.image_url} alt="" class="h-40 mb-4 mx-auto" />
   </:item>
   <:item title="Name"><%= @product.name %></:item>
   <:item title="Description"><%= @product.description %></:item>
