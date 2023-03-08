@@ -31,7 +31,10 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
 
         <.input field={{f, :price}} label="Price" />
 
+        <div class="container" phx-drop-target={@uploads.image_url.ref}>
         <.live_file_input upload={@uploads.image_url} />
+        or drag and drop
+        </div>
 
         <div>
           Add up to <%= @uploads.image_url.max_entries %> photos
