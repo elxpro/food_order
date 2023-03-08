@@ -4,7 +4,7 @@
   data-id={@product.id}
   class="shadow-lg rounded-lg p-4 mb-2 hover:bg-neutral-100"
 >
-  <img src={~p"/images/#{@product.image_url}"} alt="" class="h-40 mb-4 mx-auto" />
+  <img src={@product.image_url} alt="" class="h-40 mb-4 mx-auto" />
   <div class="text-center" data-role="item-details" data-id={@product.id}>
     <.product_detail name={@product.name} size={@product.size} />
     <.product_info price={@product.price} myself={@myself} />

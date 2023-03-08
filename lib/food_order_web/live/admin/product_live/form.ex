@@ -31,7 +31,10 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
 
         <.input field={{f, :price}} label="Price" />
 
-        <.live_file_input upload={@uploads.image_url} />
+        <div class="container" phx-drop-target={@uploads.image_url.ref}>
+          <.live_file_input upload={@uploads.image_url} />
+          or drag and drop
+        </div>
 
         <div>
           Add up to <%= @uploads.image_url.max_entries %> photos
@@ -85,6 +88,7 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
   end
 
   def handle_event("save", %{"product" => product_params}, socket) do
+    product_params = build_image_url(socket, product_params)
     save(socket, socket.assigns.action, product_params)
   end
 
@@ -114,4 +118,20 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
         {:noreply, assign(socket, :changeset, changeset)}
     end
   end
+
+  defp get_file_name(entry) do
+    [ext | _] = MIME.extensions(entry.client_type)
+    "#{entry.uuid}.#{ext}"
+  end
+
+  defp build_image_url(socket, product_params) do
+  [image_url | _] = consume_uploaded_entries(socket, :image_url, fn %{path: path}, entry ->
+    file_name = get_file_name(entry)
+    dest = Path.join("priv/static/uploads", file_name)
+    File.cp!(path, dest)
+    {:ok, ~p"/uploads/#{file_name}"}
+  end)
+  Map.put(product_params, "image_url", image_url)
+end
+
 end
