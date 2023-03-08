@@ -61,7 +61,6 @@ defmodule SimpleS3Upload do
 
     fields = %{
       "key" => key,
-      # "acl" => "public-read",
       "content-type" => content_type,
       "x-amz-server-side-encryption" => "AES256",
       "x-amz-credential" => credential,
