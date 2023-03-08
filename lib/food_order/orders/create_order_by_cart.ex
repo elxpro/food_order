@@ -1,7 +1,7 @@
 defmodule FoodOrder.Orders.CreateOrderByCart do
   alias FoodOrder.Carts
-  alias FoodOrder.Orders.Order
   alias FoodOrder.Orders.Events.NewOrder
+  alias FoodOrder.Orders.Order
   alias FoodOrder.Repo
 
   def execute(%{"current_user" => current_user} = payload) do
