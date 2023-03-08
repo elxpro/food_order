@@ -65,6 +65,5 @@ defmodule FoodOrderWeb.Admin.OrderLive.Index.LayerTest do
       assert has_element?(view, "#RECEIVED>##{order.id}")
       refute has_element?(view, "#NOT_STARTED>##{order.id}")
     end
-
   end
 end
