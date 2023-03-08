@@ -31,9 +31,8 @@ defmodule ProductUploadConfig do
 
   defp s3_url() do
     bucket = System.fetch_env!("AWS_BUCKET")
-    # region = System.fetch_env!("AWS_REGION")
-    # "https://#{bucket}.s3-#{region}.amazonaws.com"
-    "//#{bucket}.s3.amazonaws.com"
+    region = System.fetch_env!("AWS_REGION")
+    "https://#{bucket}.s3-#{region}.amazonaws.com"
   end
 
   defp generate_metadata(entry, socket) do

@@ -4,7 +4,7 @@ alias FoodOrder.Orders.Order
 alias FoodOrder.Repo
 
 products =
-  for _ <- 0..50 do
+  for _ <- 0..1 do
     {:ok, product} =
       Products.create_product(%{
         description: "bla",
