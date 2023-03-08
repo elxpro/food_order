@@ -32,8 +32,7 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
         <.input field={{f, :price}} label="Price" />
 
         <div class="container" phx-drop-target={@uploads.image_url.ref}>
-        <.live_file_input upload={@uploads.image_url} />
-        or drag and drop
+          <.live_file_input upload={@uploads.image_url} /> or drag and drop
         </div>
 
         <div>
@@ -92,7 +91,11 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
   end
 
   def handle_event("save", %{"product" => product_params}, socket) do
-    product_params = build_photo_to_upload(socket, product_params)
+    # product_params = build_photo_to_upload(socket, product_params)
+    # product_params = build_photo_to_upload(socket, product_params)
+    {[image_url | _], []} = uploaded_entries(socket, :image_url)
+    image_url = ~p"/uploads/#{get_file_name(image_url)}"
+    product_params = Map.put(product_params, "image_url", image_url)
     save(socket, socket.assigns.action, product_params)
   end
 
@@ -110,7 +113,8 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
 
   defp perform(socket, function_result, message) do
     case function_result do
-      {:ok, _} ->
+      {:ok, product} ->
+        build_photo_to_upload(socket, product)
         socket =
           socket
           |> put_flash(:info, message)
@@ -123,27 +127,15 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
     end
   end
 
-  defp build_photo_to_upload(socket, product_params) do
-    [file_upload | _] =
-      consume_uploaded_entries(socket, :image_url, fn %{path: path}, entry ->
-        file_name = get_file_name(entry)
-        dest = Path.join("priv/static/uploads", file_name)
-        # file_name = Path.basename(path)
-        IO.inspect file_name, label: " here!"
-        # dest = Path.join([:code.priv_dir(:food_order), "static", "uploads", file_name])
-        File.cp!(path, dest)
-        {:ok,  ~p"/uploads/#{file_name}"}
-      end)
-      |> IO.inspect()
+  defp build_photo_to_upload(socket, product) do
+    # if use broadcast you have to pass as a function
+    consume_uploaded_entries(socket, :image_url, fn %{path: path}, entry ->
+      file_name = get_file_name(entry)
+      dest = Path.join("priv/static/uploads", file_name)
+      {:ok, File.cp!(path, dest)}
+    end)
 
-      # uploaded_files =
-      #   consume_uploaded_entries(socket, :avatar, fn %{path: path}, _entry ->
-      #     dest = Path.join([:code.priv_dir(:my_app), "static", "uploads", Path.basename(path)])
-      #     File.cp!(path, dest)
-      #     {:ok, ~p"/uploads/#{Path.basename(dest)}"}
-      #   end)
-
-    Map.put(product_params, "image_url", file_upload)
+    {:ok, product}
   end
 
   defp get_file_name(entry) do
