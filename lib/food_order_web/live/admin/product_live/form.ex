@@ -38,7 +38,7 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
           (max <%= trunc(@uploads.image_url.max_file_size / 1_000_000) %> mb each)
         </div>
 
-        <article :for={entry <- @uploads.image_url.entries} class="flex items-center justify-between">
+        <article :for={entry <- @uploads.image_url.entries} class="flex items-center justify-between" id={entry.ref}>
           <figure class="bg-orange-100 flex flex-col items-center justify-between rounded-md p-4">
             <.live_img_preview entry={entry} class="w-16 h-16" />
             <figcaption class="text-orange-800"><%= entry.client_name %></figcaption>
