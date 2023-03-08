@@ -38,30 +38,26 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
           (max <%= trunc(@uploads.image_url.max_file_size / 1_000_000) %> mb each)
         </div>
 
-        <div :for={entry <- @uploads.image_url.entries} class="flex items-center justify-between">
-          <.live_img_preview entry={entry} class="w-16 h-16" />
+        <article :for={entry <- @uploads.image_url.entries} class="flex items-center justify-between" id={entry.ref}>
+          <figure class="bg-orange-100 flex flex-col items-center justify-between rounded-md p-4">
+            <.live_img_preview entry={entry} class="w-16 h-16" />
+            <figcaption class="text-orange-800"><%= entry.client_name %></figcaption>
+          </figure>
 
-          <div class="flex flex-col">
+          <div class="flex flex-col w-full items-center p-8">
             <p
               :for={err <- upload_errors(@uploads.image_url, entry)}
               class="text-red-500 flex flex-col"
             >
               <%= humanize(err) %>
             </p>
-            <div class="w-full bg-gray-200 rounded-full">
-              <div
-                class="bg-orange-500 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-                style={"width: #{Integer.to_string(entry.progress)}#"}
-              >
-                <%= entry.progress %>
-              </div>
-            </div>
+            <progress value={entry.progress} max="100"><%= entry.progress %>%</progress>
           </div>
 
           <button phx-click="cancel" phx-target={@myself} phx-value-ref={entry.ref}>
             <Heroicons.x_mark outline class="h-5 w-5 text-red-500 stroke-current" />
           </button>
-        </div>
+        </article>
 
         <:actions>
           <.button phx-disable-with="Saving...">Save Product</.button>

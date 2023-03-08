@@ -124,6 +124,38 @@ defmodule FoodOrderWeb.Admin.ProductLive.IndexTest do
     end
   end
 
+  describe "upload images" do
+    setup [:register_and_log_in_admin_user]
+
+    test "cancel when upload images", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/admin/products")
+      assert view |> element("header>div>div>a", "New Product") |> render_click()
+
+      assert_patch(view, ~p"/admin/products/new")
+
+      assert view |> has_element?("#new-product-modal")
+
+      upload = file_input(view, "#product-form", :image_url, [
+        %{
+          last_modified: 1_594_171_879_000,
+          name: "myfile.jpeg",
+          content: " ",
+          type: "image/jpeg"
+        }
+      ])
+
+      assert render_upload(upload, "myfile.jpeg", 100) =~ "100%"
+
+      [upload | _] = upload.entries
+
+      assert has_element?(view, "##{upload["ref"]}")
+
+      ref = "[phx-click=cancel][phx-value-ref=#{upload["ref"]}]"
+      assert view |> element(ref) |> render_click()
+      refute has_element?(view, "##{upload["ref"]}")
+    end
+  end
+
   def create_product(_) do
     product = product_fixture()
     %{product: product}
