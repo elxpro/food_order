@@ -11,7 +11,7 @@ defmodule FoodOrder.Orders.AllStatusOrders do
             preparing: nil,
             received: nil
 
-  def execute() do
+  def execute do
     %__MODULE__{}
     |> all
     |> not_started

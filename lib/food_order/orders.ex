@@ -32,7 +32,7 @@ defmodule FoodOrder.Orders do
     to: UpdateOrderStatus,
     as: :execute
 
-  def get_status_list() do
+  def get_status_list do
     Order |> Ecto.Enum.values(:status) |> Enum.with_index()
   end
 end
