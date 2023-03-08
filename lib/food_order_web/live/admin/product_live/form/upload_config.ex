@@ -1,6 +1,4 @@
 defmodule ProductUploadConfig do
-  import Phoenix.HTML
-
   def upload_options() do
     get_allow_options(Mix.env())
   end
@@ -21,23 +19,27 @@ defmodule ProductUploadConfig do
     end
   end
 
-  def consume_entries(path, entry) do
+  def consume_entries(meta, entry) do
     if Mix.env() in [:test, :prod] do
       file_name = filename(entry)
       dest = Path.join("priv/static/uploads", file_name)
-      {:ok, File.cp!(path, dest)}
+      {:ok, File.cp!(meta.path, dest)}
     else
-      :ok
+      {:ok, ""}
     end
   end
 
-  @s3_bucket ""
-  defp s3_url(), do: "//#{@s3_bucket}.s3.amazonaws.com"
+  defp s3_url() do
+    bucket = System.fetch_env!("AWS_BUCKET")
+    # region = System.fetch_env!("AWS_REGION")
+    # "https://#{bucket}.s3-#{region}.amazonaws.com"
+    "//#{bucket}.s3.amazonaws.com"
+  end
 
   defp generate_metadata(entry, socket) do
     uploads = socket.assigns.uploads
     bucket = System.fetch_env!("AWS_BUCKET")
-    key = filename(entry)
+    key = "#{filename(entry)}"
 
     config = %{
       region: System.fetch_env!("AWS_REGION"),
@@ -54,7 +56,7 @@ defmodule ProductUploadConfig do
       )
 
     metadata = %{
-      uploaded: "S3",
+      uploader: "S3",
       key: filename(entry),
       url: s3_url(),
       fields: fields

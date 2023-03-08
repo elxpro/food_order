@@ -52,7 +52,8 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
 
   defp perform(socket, function_result, message) do
     case function_result do
-      {:ok, _} ->
+      {:ok, product} ->
+        IO.inspect product
         build_image_url(socket)
 
         socket =
@@ -68,6 +69,6 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
   end
 
   defp build_image_url(socket) do
-    consume_uploaded_entries(socket, :image_url, &consume_entries(&1.path, &2))
+    consume_uploaded_entries(socket, :image_url, &consume_entries(&1, &2))
   end
 end

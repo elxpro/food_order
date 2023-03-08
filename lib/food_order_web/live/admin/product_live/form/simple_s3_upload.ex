@@ -49,7 +49,6 @@ defmodule SimpleS3Upload do
         "conditions": [
           {"bucket":  "#{bucket}"},
           ["eq", "$key", "#{key}"],
-          {"acl": "public-read"},
           ["eq", "$Content-Type", "#{content_type}"],
           ["content-length-range", 0, #{max_file_size}],
           {"x-amz-server-side-encryption": "AES256"},
@@ -62,7 +61,7 @@ defmodule SimpleS3Upload do
 
     fields = %{
       "key" => key,
-      "acl" => "public-read",
+      # "acl" => "public-read",
       "content-type" => content_type,
       "x-amz-server-side-encryption" => "AES256",
       "x-amz-credential" => credential,
@@ -113,5 +112,5 @@ defmodule SimpleS3Upload do
     |> String.slice(0..7)
   end
 
-  defp sha256(secret, msg), do: :crypto.hmac(:sha256, secret, msg)
+  defp sha256(secret, msg), do: :crypto.mac(:hmac, :sha256, secret, msg)
 end
