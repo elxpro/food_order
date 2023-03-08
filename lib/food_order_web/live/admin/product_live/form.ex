@@ -31,14 +31,20 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
 
         <.input field={{f, :price}} label="Price" />
 
-        <.live_file_input upload={@uploads.image_url} />
+        <div class="container" phx-drop-target={@uploads.image_url.ref}>
+          <.live_file_input upload={@uploads.image_url} /> or drag and drop
+        </div>
 
         <div>
           Add up to <%= @uploads.image_url.max_entries %> photos
           (max <%= trunc(@uploads.image_url.max_file_size / 1_000_000) %> mb each)
         </div>
 
-        <article :for={entry <- @uploads.image_url.entries} class="flex items-center justify-between" id={entry.ref}>
+        <article
+          :for={entry <- @uploads.image_url.entries}
+          class="flex items-center justify-between"
+          id={entry.ref}
+        >
           <figure class="bg-orange-100 flex flex-col items-center justify-between rounded-md p-4">
             <.live_img_preview entry={entry} class="w-16 h-16" />
             <figcaption class="text-orange-800"><%= entry.client_name %></figcaption>
@@ -85,6 +91,9 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
   end
 
   def handle_event("save", %{"product" => product_params}, socket) do
+    {[image_url | _], []} = uploaded_entries(socket, :image_url)
+    image_url = ~p"/uploads/#{get_file_name(image_url)}"
+    product_params = Map.put(product_params, "image_url", image_url)
     save(socket, socket.assigns.action, product_params)
   end
 
@@ -103,6 +112,8 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
   defp perform(socket, function_result, message) do
     case function_result do
       {:ok, _} ->
+        build_image_url(socket)
+
         socket =
           socket
           |> put_flash(:info, message)
@@ -113,5 +124,18 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
       {:error, changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
     end
+  end
+
+  defp get_file_name(entry) do
+    [ext | _] = MIME.extensions(entry.client_type)
+    "#{entry.uuid}.#{ext}"
+  end
+
+  defp build_image_url(socket) do
+    consume_uploaded_entries(socket, :image_url, fn %{path: path}, entry ->
+      file_name = get_file_name(entry)
+      dest = Path.join("priv/static/uploads", file_name)
+      {:ok, File.cp!(path, dest)}
+    end)
   end
 end
