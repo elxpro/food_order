@@ -18,8 +18,6 @@ defmodule FoodOrder.Orders do
   defdelegate subscribe_update_order(id), to: UpdateOrder, as: :subscribe_update_order
   defdelegate subscribe_update_user_row(user_id), to: UpdateOrder, as: :subscribe_update_user_row
 
-
-
   defdelegate all_status_orders, to: AllStatusOrders, as: :execute
   defdelegate create_order_by_cart(payload), to: CreateOrderByCart, as: :execute
 
@@ -29,8 +27,10 @@ defmodule FoodOrder.Orders do
 
   defdelegate list_orders_by_status(status), to: ListOrdersByStatus, as: :execute
   defdelegate list_orders_by_user_id(user_id), to: ListOrdersByUserId, as: :execute
-  defdelegate update_order_status(order_id, old_status, new_status), to: UpdateOrderStatus, as: :execute
 
+  defdelegate update_order_status(order_id, old_status, new_status),
+    to: UpdateOrderStatus,
+    as: :execute
 
   def get_status_list() do
     Order |> Ecto.Enum.values(:status) |> Enum.with_index()

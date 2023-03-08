@@ -135,14 +135,15 @@ defmodule FoodOrderWeb.Admin.ProductLive.IndexTest do
 
       assert view |> has_element?("#new-product-modal")
 
-      upload = file_input(view, "#product-form", :image_url, [
-        %{
-          last_modified: 1_594_171_879_000,
-          name: "myfile.jpeg",
-          content: " ",
-          type: "image/jpeg"
-        }
-      ])
+      upload =
+        file_input(view, "#product-form", :image_url, [
+          %{
+            last_modified: 1_594_171_879_000,
+            name: "myfile.jpeg",
+            content: " ",
+            type: "image/jpeg"
+          }
+        ])
 
       assert render_upload(upload, "myfile.jpeg", 100) =~ "100%"
 
