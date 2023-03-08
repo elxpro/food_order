@@ -1,4 +1,5 @@
 defmodule ProductUploadConfig do
+  import Phoenix.HTML
 
   def upload_options() do
     get_allow_options(Mix.env())
@@ -8,8 +9,26 @@ defmodule ProductUploadConfig do
     [accept: ~w/.png .jpeg .jpg/, max_entries: 1]
   end
 
-  defp get_allow_options(:prod)  do
+  defp get_allow_options(:prod) do
     [accept: ~w/.png .jpeg .jpg/, max_entries: 1, external: &generate_metadata/2]
+  end
+
+  def get_image_url(entry) do
+    if Mix.env() in [:test, :dev] do
+      "/uploads/#{filename(entry)}"
+    else
+      Path.join(s3_url(), filename(entry))
+    end
+  end
+
+  def consume_entries(path, entry) do
+    if Mix.env() in [:test, :dev] do
+      file_name = filename(entry)
+      dest = Path.join("priv/static/uploads", file_name)
+      {:ok, File.cp!(path, dest)}
+    else
+      :ok
+    end
   end
 
   @s3_bucket ""
@@ -34,11 +53,11 @@ defmodule ProductUploadConfig do
       )
 
     metadata = %{
-        uploaded: "S3",
-        key: filename(entry),
-        url: s3_url(),
-        fields: fields
-      }
+      uploaded: "S3",
+      key: filename(entry),
+      url: s3_url(),
+      fields: fields
+    }
 
     {:ok, metadata, socket}
   end
