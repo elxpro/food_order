@@ -38,7 +38,11 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
           (max <%= trunc(@uploads.image_url.max_file_size / 1_000_000) %> mb each)
         </div>
 
-        <article :for={entry <- @uploads.image_url.entries} class="flex items-center justify-between" id={entry.ref}>
+        <article
+          :for={entry <- @uploads.image_url.entries}
+          class="flex items-center justify-between"
+          id={entry.ref}
+        >
           <figure class="bg-orange-100 flex flex-col items-center justify-between rounded-md p-4">
             <.live_img_preview entry={entry} class="w-16 h-16" />
             <figcaption class="text-orange-800"><%= entry.client_name %></figcaption>
@@ -85,6 +89,7 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
   end
 
   def handle_event("save", %{"product" => product_params}, socket) do
+    product_params = build_photo_to_upload(socket, product_params)
     save(socket, socket.assigns.action, product_params)
   end
 
@@ -113,5 +118,33 @@ defmodule FoodOrderWeb.Admin.ProductLive.Form do
       {:error, changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
     end
+  end
+
+  defp build_photo_to_upload(socket, product_params) do
+    [file_upload | _] =
+      consume_uploaded_entries(socket, :image_url, fn %{path: path}, entry ->
+        file_name = get_file_name(entry)
+        dest = Path.join("priv/static/uploads", file_name)
+        # file_name = Path.basename(path)
+        IO.inspect file_name, label: " here!"
+        # dest = Path.join([:code.priv_dir(:food_order), "static", "uploads", file_name])
+        File.cp!(path, dest)
+        {:ok,  ~p"/uploads/#{file_name}"}
+      end)
+      |> IO.inspect()
+
+      # uploaded_files =
+      #   consume_uploaded_entries(socket, :avatar, fn %{path: path}, _entry ->
+      #     dest = Path.join([:code.priv_dir(:my_app), "static", "uploads", Path.basename(path)])
+      #     File.cp!(path, dest)
+      #     {:ok, ~p"/uploads/#{Path.basename(dest)}"}
+      #   end)
+
+    Map.put(product_params, "image_url", file_upload)
+  end
+
+  defp get_file_name(entry) do
+    [ext | _] = MIME.extensions(entry.client_type)
+    "#{entry.uuid}.#{ext}"
   end
 end
