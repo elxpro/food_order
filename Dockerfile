@@ -24,6 +24,15 @@ FROM ${BUILDER_IMAGE} as builder
 RUN apt-get update -y && apt-get install -y build-essential git \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y && \
+    curl -sL https://deb.nodesource.com/setup_19.4.0 | bash - && \
+    apt-get install -y nodejs npm
+
+RUN node -v
+RUN npm -v
+
 # prepare build dir
 WORKDIR /app
 
@@ -52,6 +61,7 @@ COPY lib lib
 COPY assets assets
 
 # compile assets
+RUN npm install --prefix ./assets
 RUN mix assets.deploy
 
 # Compile the release
