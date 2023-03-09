@@ -19,7 +19,10 @@ spec:
             - containerPort: 4000
           env:
             - name: DATABASE_URL
-              value: ecto://lmpeefji:hPLvPSteyX7ciPuEXLg1To1NS5jl0LPp@jelani.db.elephantsql.com/lmpeefji
+              valueFrom:
+                secretKeyRef:
+                  key: DATABASE_URL
+                  name: database-url
             - name: AWS_BUCKET
               value: elxpro-course-rent-cars-gus
             - name: AWS_REGION
