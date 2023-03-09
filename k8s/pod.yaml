@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+  name: food-order-pod
+  labels:
+    component: web
+spec:
+  containers:
+    - name: food-order
+      image: guuhworship/food_order:v1
+      ports:
+        - containerPort: 4000
+      env:
+        - name: DATABASE_URL
+          value: ecto://lmpeefji:hPLvPSteyX7ciPuEXLg1To1NS5jl0LPp@jelani.db.elephantsql.com/lmpeefji
+        - name: AWS_BUCKET
+          value: elxpro-course-rent-cars-gus
+        - name: AWS_REGION
+          value: us-east-2
+        - name: AWS_ACCESS_KEY_ID
+          value: AKIAUAUKRHND6RZ3EFYB
+        - name: AWS_SECRET_ACCESS_KEY
+          value: 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
+        - name: POOL_SIZE
+          value: '2'
+        - name: SECRET_KEY_BASE
+          value: MFM3dPSGFeDQyftsntzVo0H316BWUxsdZZP3/k9SQFfUfyyvPgDz1wjrSloMyP6Q
+        - name: PHX_HOST
+          value: localhost
