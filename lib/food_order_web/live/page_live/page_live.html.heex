@@ -9,7 +9,7 @@
         </button>
 
         <ul>
-          <li :for={node <- Node.list}><%= node %></li>
+          <li :for={node <- Node.list()}><%= node %></li>
         </ul>
       </div>
       <img src={~p"/images/hero.svg"} alt="" data-role="hero-img" />

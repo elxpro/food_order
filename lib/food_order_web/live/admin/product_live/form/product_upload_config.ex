@@ -1,5 +1,5 @@
 defmodule ProductUploadConfig do
-  def upload_options() do
+  def upload_options do
     get_allow_options(System.get_env("PROD"))
   end
 
