@@ -12,7 +12,7 @@ defmodule FoodOrder.Application do
       clustering_food_order: [
         strategy: Cluster.Strategy.Kubernetes.DNS,
         config: [
-          service: "food-order",
+          service: "food-order-headless",
           application_name: "food_order",
           polling_interval: 10_000
         ]

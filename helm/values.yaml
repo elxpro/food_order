@@ -3,7 +3,7 @@ replicaPgCount: 1
 
 image:
   repository: guuhworship/food_order
-  tag: v1
+  tag: v2
 
 containerPort: 4000
 

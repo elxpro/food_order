@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-    name: {{ .Chart.Name }}
+    name: food-order-headless
 spec:
-    ports:
-        - port: 8000
-    selector:
-        app: {{ .Chart.Name }}
-    clusterIp: None
+  ports:
+    - port: 8000
+  selector:
+    app: {{ .Chart.Name }}
+  clusterIP: None
