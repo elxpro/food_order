@@ -62,7 +62,8 @@ defmodule FoodOrder.MixProject do
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.10", only: :test},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:money, "~> 1.12"}
+      {:money, "~> 1.12"},
+      {:libcluster, "~> 3.3"}
     ]
   end
 

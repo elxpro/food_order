@@ -8,7 +8,19 @@ defmodule FoodOrder.Application do
 
   @impl true
   def start(_type, _args) do
+    topologies = [
+      clustering_food_order: [
+        strategy: Cluster.Strategy.Kubernetes.DNS,
+        config: [
+          service: "food-order",
+          application_name: "food_order",
+          polling_interval: 10_000
+        ]
+      ]
+    ]
+
     children = [
+      {Cluster.Supervisor, [topologies, [name: FoodOrder.ClusterSupervisor]]},
       # Start the Telemetry supervisor
       FoodOrderWeb.Telemetry,
       # Start the Ecto repository
