@@ -24,8 +24,8 @@ spec:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
-                  key: {{ .Chart.Name }}
-                  name: database-url
+                  key: database-url
+                  name: {{ .Chart.Name }}
             - name: AWS_BUCKET
               value: {{ .Values.aws.bucket }}
             - name: AWS_REGION
