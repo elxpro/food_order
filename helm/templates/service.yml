@@ -5,7 +5,8 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    component: {{ .Chart.Name }}
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    app.kubernetes.io/instance: {{ .Chart.Name }}
   ports:
     - port: 4000
       targetPort: 4000
