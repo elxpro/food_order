@@ -1,0 +1,22 @@
+replicaCount: 3
+replicaPgCount: 1
+
+image:
+  repository: guuhworship/food_order
+  tag: v1
+
+containerPort: 4000
+
+database:
+  url: ecto://postgres:postgres@postgres-cluster-ip:5432/food_order
+  poolSize: "10"
+
+secretKeyBase: MFM3dPSGFeDQyftsntzVo0H316BWUxsdZZP3/k9SQFfUfyyvPgDz1wjrSloMyP6Q
+pgpassword: postgres
+host: localhost
+
+aws:
+  bucket: elxpro-course-rent-cars-gus
+  region: us-east-2
+  accessKeyId: AKIAUAUKRHND6RZ3EFYB
+  secretAccessKey: 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

@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: postgres-deployment
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaPgCount }}
   selector:
     matchLabels:
       component: postgres
@@ -31,5 +31,5 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  key: POSTGRES_PASSWORD
+                  key: {{ .Chart.Name }}
                   name: pgpassword
