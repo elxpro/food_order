@@ -21,11 +21,21 @@ spec:
           ports:
             - containerPort: {{ .Values.containerPort }}
           env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
-                  key: {{ .Chart.Name }}
-                  name: database-url
+                  key: database-url
+                  name: {{ .Chart.Name }}
+            - name: PROD
+              value: "true"
             - name: AWS_BUCKET
               value: {{ .Values.aws.bucket }}
             - name: AWS_REGION

@@ -7,6 +7,10 @@
         <button class="px-6 py-2 bg-orange-500 text-white font-bold mt-5 rounded-full">
           Order now
         </button>
+
+        <ul>
+          <li :for={node <- Node.list}><%= node %></li>
+        </ul>
       </div>
       <img src={~p"/images/hero.svg"} alt="" data-role="hero-img" />
     </div>

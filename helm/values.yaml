@@ -2,8 +2,8 @@ replicaCount: 3
 replicaPgCount: 1
 
 image:
-  repository: guuhworship/food_order
-  tag: v1
+  repository: gcr.io/numeric-melody-335322/food_order
+  tag: v3
 
 containerPort: 4000
 
