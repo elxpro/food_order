@@ -34,6 +34,8 @@ spec:
                 secretKeyRef:
                   key: database-url
                   name: {{ .Chart.Name }}
+            - name: PROD
+              value: "true"
             - name: AWS_BUCKET
               value: {{ .Values.aws.bucket }}
             - name: AWS_REGION
