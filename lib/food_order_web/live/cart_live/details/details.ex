@@ -22,4 +22,8 @@ defmodule FoodOrderWeb.CartLive.Details do
         {:noreply, socket}
     end
   end
+
+  def handle_event("get-address", params, socket) do
+    {:reply, %{address: "pumpkin return"}, socket}
+  end
 end
