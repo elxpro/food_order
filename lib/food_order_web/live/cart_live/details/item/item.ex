@@ -7,7 +7,7 @@ defmodule FoodOrderWeb.CartLive.Details.Item do
     <div id={@id} data-role="item" class="flex items-center my-8 shadow-lg p-2 hover:bg-neutral-100">
       <img
         data-role="item-image"
-        src={~p"/images/#{@item.item.image_url}"}
+        src={"#{@item.item.image_url}"}
         alt=""
         class="h-16 w-16 rounded-full"
       />
