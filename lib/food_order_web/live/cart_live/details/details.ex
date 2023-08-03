@@ -2,6 +2,7 @@ defmodule FoodOrderWeb.CartLive.Details do
   use FoodOrderWeb, :live_component
   alias __MODULE__.Item
   alias FoodOrder.Orders
+  alias FoodOrder.GetAddress
 
   def handle_event("create_order", params, socket) do
     case Orders.create_order_by_cart(params) do
@@ -24,6 +25,6 @@ defmodule FoodOrderWeb.CartLive.Details do
   end
 
   def handle_event("get-address", params, socket) do
-    {:reply, %{address: "pumpkin return"}, socket}
+    {:reply, %{address: GetAddress.execute(params)}, socket}
   end
 end

@@ -27,7 +27,6 @@ const GetAddress = {
                     // console.log(reply)
                     const { address: value } = reply;
                     this.el.value = value
-
                     // console.log(ref)
                 })
             })
