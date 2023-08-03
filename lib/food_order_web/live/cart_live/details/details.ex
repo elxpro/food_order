@@ -1,8 +1,8 @@
 defmodule FoodOrderWeb.CartLive.Details do
   use FoodOrderWeb, :live_component
   alias __MODULE__.Item
-  alias FoodOrder.Orders
   alias FoodOrder.GetAddress
+  alias FoodOrder.Orders
 
   def handle_event("create_order", params, socket) do
     case Orders.create_order_by_cart(params) do
