@@ -9,6 +9,7 @@
       </h6>
     </div>
 
+    <div class="flex items-center justify-between">
     <ul>
       <li
         :for={{status, index} <- @status_list}
@@ -27,5 +28,13 @@
         </div>
       </li>
     </ul>
+
+
+  <div id="wrapper" phx-update="ignore">
+  <div id="map" phx-hook="Tracking"></div>
+</div>
+    </div>
   </div>
+
+
 </section>

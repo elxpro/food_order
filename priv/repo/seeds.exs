@@ -46,7 +46,9 @@ order_attrs = %{
   user_id: user.id,
   items: [%{quantity: 1, product_id: product.id}],
   total_quantity: 1,
-  total_price: product.price
+  total_price: product.price,
+  lat: -23.493365066334192,
+  lng: -46.84890248452617
 }
 
 %Order{}

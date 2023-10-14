@@ -14,6 +14,8 @@ defmodule FoodOrder.Repo.Migrations.CreateOrders do
       add :total_quantity, :integer, default: 0
       add :status, :status, default: "NOT_STARTED"
       add :address, :string, null: false
+      add :lat, :float
+      add :lng, :float
       add :phone_number, :string, null: false
 
       add :user_id,
