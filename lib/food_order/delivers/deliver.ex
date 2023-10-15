@@ -3,6 +3,7 @@ defmodule FoodOrder.Delivers.Deliver do
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
+  @derive {Jason.Encoder, only: [:id, :lat, :lng, :name]}
   @foreign_key_type :binary_id
   schema "delivers" do
     field :lat, :float
@@ -16,6 +17,6 @@ defmodule FoodOrder.Delivers.Deliver do
   def changeset(deliver, attrs) do
     deliver
     |> cast(attrs, [:name, :lat, :lng])
-    |> validate_required([:name, :lat, :lng])
+    |> validate_required([:name])
   end
 end

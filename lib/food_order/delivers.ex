@@ -73,6 +73,15 @@ defmodule FoodOrder.Delivers do
     |> Repo.update()
   end
 
+  def update_deliver_and_notify_the_order(%Deliver{} = deliver_old, attrs, order) do
+    case update_deliver(deliver_old, attrs) do
+      {:ok, deliver} ->
+        FoodOrder.Orders.Events.ChangeDeliveringStatus.broadcast(deliver, deliver_old, order.id)
+      {:error, changeset} ->
+        {:error, changeset}
+    end
+  end
+
   @doc """
   Deletes a deliver.
 

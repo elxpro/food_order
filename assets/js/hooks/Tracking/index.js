@@ -10,6 +10,11 @@ const Tracking = {
         this.map = new LeafletMap(this.el, [lat, lng], (event) => {});
         this.map.addMarker(order);
       });
+      
+      this.handleEvent("update-deliver-location", (deliver) => {
+        this.map.updateDeliver(deliver);
+        // this.map.highlightMarker(restaurant);
+      });
     }
   },
 };

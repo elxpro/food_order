@@ -39,6 +39,19 @@ export default class LeafletMap {
     return marker;
   }
 
+  updateDeliver(deliver) {
+    console.log("updateDeliver");
+    console.log(deliver.deliver_old);
+
+    this.map.removeLayer(
+      L.marker([deliver.deliver_old.lat, deliver.deliver_old.lng])
+    );
+    const marker = L.marker([deliver.deliver.lat, deliver.deliver.lng], {
+      deliverId: deliver.deliver.id,
+    }).addTo(this.map);
+    return marker;
+  }
+
   //   highlightMarker(restaurant) {
   //     const marker = this.markerRestaurant(restaurant);
   //     marker.openPopup();
