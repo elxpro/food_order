@@ -11,6 +11,7 @@ defmodule FoodOrder.Orders do
     ListOrdersByUserId,
     UpdateOrderStatus
   }
+  alias FoodOrder.Repo
 
   defdelegate subscribe_to_receive_new_orders, to: NewOrder, as: :subscribe
 
@@ -34,5 +35,9 @@ defmodule FoodOrder.Orders do
 
   def get_status_list do
     Order |> Ecto.Enum.values(:status) |> Enum.with_index()
+  end
+
+  def get(id) do
+    Repo.get!(Order, id)
   end
 end
