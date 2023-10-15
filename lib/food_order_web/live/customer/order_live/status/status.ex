@@ -8,7 +8,6 @@ defmodule FoodOrderWeb.Customer.OrderLive.Status do
       Orders.subscribe_update_order(id)
     end
 
-    IO.inspect "here!"
     current_user = socket.assigns.current_user
     order = Orders.get_order_by_id_and_customer_id(id, current_user.id)
     status_list = Orders.get_status_list()
