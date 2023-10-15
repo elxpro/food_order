@@ -21,8 +21,10 @@ defmodule FoodOrderWeb.Router do
   scope "/", FoodOrderWeb do
     pipe_through :browser
 
+    live "/orders/deliver/:id", OrderLive.Deliver, :index
     live_session :create_cart_session, on_mount: CartSession do
       live "/", PageLive, :index
+
       live "/cart", CartLive, :index
     end
   end

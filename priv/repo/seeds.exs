@@ -40,13 +40,20 @@ Accounts.register_user(%{
 
 [product | _rest] = products
 
+{:ok, deliver} = %FoodOrder.Delivers.Deliver{}
+|> FoodOrder.Delivers.Deliver.changeset(%{name: "Pumpkin"})
+|> Repo.insert()
+
 order_attrs = %{
   phone_number: "123",
   address: "123213",
   user_id: user.id,
   items: [%{quantity: 1, product_id: product.id}],
   total_quantity: 1,
-  total_price: product.price
+  total_price: product.price,
+  lat: -23.493365066334192,
+  lng: -46.84890248452617,
+  deliver_id: deliver.id
 }
 
 %Order{}
