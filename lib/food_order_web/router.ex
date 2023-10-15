@@ -76,6 +76,7 @@ defmodule FoodOrderWeb.Router do
       scope "/customer", Customer, as: :customer do
         live "/orders", OrderLive.Index, :index
         live "/orders/:id", OrderLive.Status, :status
+        live "/orders/deliver/:id", OrderLive.Deliver, :index
       end
     end
 

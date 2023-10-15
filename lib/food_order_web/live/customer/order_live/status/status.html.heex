@@ -10,31 +10,28 @@
     </div>
 
     <div class="flex items-center justify-between">
-    <ul>
-      <li
-        :for={{status, index} <- @status_list}
-        id={status}
-        class={[index <= @status_list[@order.status] && "text-orange-500", "text-sm md:text-xl"]}
-      >
-        <div class="flex items-center">
-          <.get_icon status={status} />
-          <span class="pl-2"><%= humanize(status) %></span>
-        </div>
-        <div class={[
-          index <= @status_list[@order.status] && "border-orange-500",
-          (status == :DELIVERED && "h-0") || "h-14",
-          "relative border-l-4 left-4 my-2"
-        ]}>
-        </div>
-      </li>
-    </ul>
+      <ul>
+        <li
+          :for={{status, index} <- @status_list}
+          id={status}
+          class={[index <= @status_list[@order.status] && "text-orange-500", "text-sm md:text-xl"]}
+        >
+          <div class="flex items-center">
+            <.get_icon status={status} />
+            <span class="pl-2"><%= humanize(status) %></span>
+          </div>
+          <div class={[
+            index <= @status_list[@order.status] && "border-orange-500",
+            (status == :DELIVERED && "h-0") || "h-14",
+            "relative border-l-4 left-4 my-2"
+          ]}>
+          </div>
+        </li>
+      </ul>
 
-
-  <div id="wrapper" phx-update="ignore">
-  <div id="map" phx-hook="Tracking"></div>
-</div>
+      <div id="wrapper" phx-update="ignore" :if={@order.status == :DELIVERING}>
+        <div id="map" phx-hook="Tracking" data-order={@order |> Jason.encode!()}></div>
+      </div>
     </div>
   </div>
-
-
 </section>

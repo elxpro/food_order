@@ -19,50 +19,45 @@ export default class LeafletMap {
     this.markerClickedCallback = markerClickedCallback;
   }
 
-//   addMarker(restaurant) {
-//     const marker = L.marker([restaurant.latitude, restaurant.longitude], {
-//       restaurantId: restaurant.id,
-//     })
-//       .addTo(this.map)
-//       .bindPopup(
-//         `
-//       <h3>${restaurant.applicant}</h3>
-//       <span>
-//         <strong>Description: </strong> ${restaurant.food_items}
-//       </span>
-//       <span>
-//         <strong>Location</strong> ${restaurant.location_description}
-//       </span>
-//       `
-//       );
+  addMarker(order) {
+    console.log(order);
+    const marker = L.marker([order.lat, order.lng], {
+      orderId: order.id,
+    })
+      .addTo(this.map)
+      .bindPopup(
+        `
+        hi
+      `
+      );
 
-//     marker.on("click", (e) => {
-//       marker.openPopup();
-//       this.markerClickedCallback(e);
-//     });
+    marker.on("click", (e) => {
+      marker.openPopup();
+      // this.markerClickedCallback(e);
+    });
 
-//     return marker;
-//   }
+    return marker;
+  }
 
-//   highlightMarker(restaurant) {
-//     const marker = this.markerRestaurant(restaurant);
-//     marker.openPopup();
-//     this.map.panTo(marker.getLatLng());
-//   }
+  //   highlightMarker(restaurant) {
+  //     const marker = this.markerRestaurant(restaurant);
+  //     marker.openPopup();
+  //     this.map.panTo(marker.getLatLng());
+  //   }
 
-//   markerRestaurant(restaurant) {
-//     let markerLayer;
-//     this.map.eachLayer((layer) => {
-//       if (layer instanceof L.Marker) {
-//         const position = layer.getLatLng();
-//         if (
-//           position.lat === restaurant.latitude &&
-//           position.lng === restaurant.longitude
-//         ) {
-//           markerLayer = layer;
-//         }
-//       }
-//     });
-//     return markerLayer;
-//   }
+  //   markerRestaurant(restaurant) {
+  //     let markerLayer;
+  //     this.map.eachLayer((layer) => {
+  //       if (layer instanceof L.Marker) {
+  //         const position = layer.getLatLng();
+  //         if (
+  //           position.lat === restaurant.latitude &&
+  //           position.lng === restaurant.longitude
+  //         ) {
+  //           markerLayer = layer;
+  //         }
+  //       }
+  //     });
+  //     return markerLayer;
+  //   }
 }
